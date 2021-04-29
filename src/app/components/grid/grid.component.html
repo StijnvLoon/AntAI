@@ -1,0 +1,7 @@
+<div class="container">
+    <mat-grid-list class="grid" [cols]="grid.width" gutterSize="1px">
+        <mat-grid-tile *ngFor="let cell of grid.cellsMap.values()">
+            <app-cell [cell]="cell" style="width: 100%; height: 100%;"></app-cell>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
