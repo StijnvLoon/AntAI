@@ -1,5 +1,6 @@
 import { Cell } from "../Cell";
 import { Entity, EntityType } from "../Entity";
+import { CustomMath} from "src/utils/CustomMath"
 
 export class Food extends Entity {
     constructor(
