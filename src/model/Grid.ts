@@ -2,6 +2,7 @@ import { Cell } from "./Cell";
 import { Entity } from "./Entity";
 import { Food } from "./entities/Food";
 import { Enemy } from "./entities/Enemy";
+import { CustomMath} from "src/utils/CustomMath";
 
 export class Grid {
 
@@ -25,10 +26,10 @@ export class Grid {
     }
 
     private getEntity(cell: Cell): Entity {
-        if (this.randomIntFromInterval(0, 100) < this.foodPercent) {
+        if (CustomMath.randomRange(0, 100) < this.foodPercent) {
             return new Food(cell)
         }
-        if (this.randomIntFromInterval(0, 100) < this.enemyPercent) {
+        if (CustomMath.randomRange(0, 100) < this.enemyPercent) {
             return new Enemy(cell)
         }
         return undefined
@@ -39,15 +40,15 @@ export class Grid {
     }
 
     public getRandomCell(): Cell {
-        const randomX = this.randomIntFromInterval(0, this.width - 1)
-        const randomY = this.randomIntFromInterval(0, this.height - 1)
+        const randomX = CustomMath.randomRange(0, this.width - 1)
+        const randomY = CustomMath.randomRange(0, this.height - 1)
 
         return this.getCellAt(randomY, randomX)
     }
 
     public getRandomNeighbourCell(currentCell: Cell): Cell {
         //1: up, 2: right, 3: down, 4: left
-        const direction = this.randomIntFromInterval(1, 4)
+        const direction = CustomMath.randomRange(1, 4)
 
         if(
             (currentCell.y == 0 && direction == 1) ||
@@ -68,9 +69,5 @@ export class Grid {
             case 4:
                 return this.getCellAt(currentCell.y, currentCell.x - 1)
         }
-    }
-
-    public randomIntFromInterval(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
     }
 }

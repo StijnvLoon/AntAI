@@ -6,6 +6,6 @@ export class Cell {
 
     constructor(
         public readonly y: number,
-        public readonly x: number
+        public readonly x: number,
     ) { }
 }
