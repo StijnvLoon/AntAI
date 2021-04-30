@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   width: number = 45
   height: number = 20
   enemyPercent: number = 4
-  foodPercent: number = 20
+  foodPercent: number = 0
   isPlaying: boolean = false
   delay = 1000
 
