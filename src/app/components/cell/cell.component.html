@@ -1,3 +1,10 @@
-<div class="container" [ngStyle]="getStyle()" (click)="log()">
-
+<div class="cell" [ngStyle]="getCellStyle()" (click)="log()">
+    <div class="food" *ngIf="cell.type == 1">
+        {{cell.foodAmount}}
+    </div>
+    <div class="entity" [ngStyle]="getEntityStyle()">
+        <div class="food" *ngIf="cell.entity">
+            {{cell.entity.type == 0 ? cell.entity.foodAmount : ''}}
+        </div>
+    </div>
 </div>
