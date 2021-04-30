@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Cell } from 'src/model/Cell';
 import { EntityType } from 'src/model/Entity';
 import { CustomMath } from 'src/utils/CustomMath'; 
-
+import { VerboseMode } from 'src/utils/VerboseMode';
 @Component({
   selector: 'app-cell',
   templateUrl: './cell.component.html',
@@ -48,7 +48,7 @@ export class CellComponent implements OnInit {
   }
 
   log() {
-    console.log(this.cell)
+    if (VerboseMode.verbose) console.log(this.cell)
   }
 
 }
