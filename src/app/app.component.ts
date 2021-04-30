@@ -49,8 +49,8 @@ export class AppComponent implements OnInit {
 
   moveAnts() {
     this.colony.ants.forEach((ant) => {
-      ant.moveTo(this.colony.grid.getRandomCell())
-      // ant.moveTo(this.colony.grid.getRandomNeighbourCell(ant.currentCell))
+      // ant.moveTo(this.colony.grid.getRandomCell())
+      ant.moveTo(this.colony.grid.getRandomNeighbourCell(ant.currentCell))
     })
   }
 

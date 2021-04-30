@@ -11,6 +11,5 @@ export class Ant extends Entity {
         this.currentCell.entity = undefined
         this.currentCell = targetCell
         targetCell.entity = this
-        console.log(targetCell)
     }
 }

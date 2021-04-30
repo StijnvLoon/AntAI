@@ -50,10 +50,10 @@ export class Grid {
         const direction = this.randomIntFromInterval(1, 4)
 
         if(
-            currentCell.y == 0 && direction == 1 ||
-            currentCell.y == this.height-1 && direction == 3 ||
-            currentCell.x == 0 && direction == 4 ||
-            currentCell.x == this.width-1 && direction == 2
+            (currentCell.y == 0 && direction == 1) ||
+            (currentCell.y == this.height-1 && direction == 3) ||
+            (currentCell.x == 0 && direction == 4) ||
+            (currentCell.x == this.width-1 && direction == 2)
             ) {
             return currentCell
         }
@@ -66,7 +66,7 @@ export class Grid {
             case 3:
                 return this.getCellAt(currentCell.y + 1, currentCell.x)
             case 4:
-                return this.getCellAt(currentCell.y - 1, currentCell.x - 1)
+                return this.getCellAt(currentCell.y, currentCell.x - 1)
         }
     }
 
