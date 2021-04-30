@@ -4,12 +4,12 @@ import { VerboseMode } from "../../utils/VerboseMode";
 import { Ant } from "../entities/Ant";
 
 export class FoodCell extends Cell {
+
+    public readonly maxfoodamount: number = 10
     
     constructor(
         public readonly y: number,
         public readonly x: number,
-        public readonly minfoodamount: number = 0,
-        public readonly maxfoodamount: number = 10,
         public foodAmount: number = CustomMath.randomRange(-300, 100), //anything below 0 means no food is present
     ) {
         super(y, x, CellType.FOOD, (ant: Ant) => {
@@ -36,7 +36,7 @@ export class FoodCell extends Cell {
         if (this.foodAmount < 0) {
             this.foodAmount = 0;
         } else {
-            this.foodAmount = CustomMath.randomRange(this.minfoodamount + 1, this.maxfoodamount)
+            this.foodAmount = CustomMath.randomRange(1, this.maxfoodamount)
         }
     }
 }

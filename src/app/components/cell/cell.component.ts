@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Cell, CellType } from 'src/model/Cell';
+import { FoodCell } from 'src/model/cells/FoodCell';
 import { EntityType } from 'src/model/Entity';
+import { CustomMath } from 'src/utils/CustomMath';
 import { VerboseMode } from 'src/utils/VerboseMode';
 
 @Component({
@@ -41,18 +43,16 @@ export class CellComponent implements OnInit {
       case CellType.BLOCKADE:
         return { 'background-color': 'brown' }
       case CellType.FOOD:
-        return { 'background-color': 'green' }
+        const foodType: any = this.cell
+
+        if (foodType.foodAmount > 0) {
+          var food_storage_percentage = (foodType.foodAmount / foodType.maxfoodamount) * 100;
+          var calculated_lightness = CustomMath.clamp(100 - food_storage_percentage, 30, 50);
+          return { 'background-color': `hsl(136,100%,${calculated_lightness}%)` };
+        }
       default:
         return {}
     }
-    // if (this.cell.foodamount > 0) {
-    //   // return {'background-color' : 'hsl(136,100%,50%)'}
-    //   var food_storage_percentage = (this.cell.foodamount / this.cell.maxfoodamount) * 100;
-    //   var calculated_lightness = CustomMath.clamp(100 - food_storage_percentage, 30, 100);
-    //   //var calculated_lightness = CustomMath.clamp(100 - CustomMath.clamp(this.cell.foodamount, 0,100),50,100);
-    //   return { 'background-color': `hsl(136,100%,${calculated_lightness}%)` };
-    //   // return { 'background-color' : 'green', 'opacity' : CustomMath.clamp(this.cell.foodamount, 0.1, 1)/10}
-    // }
   }
 
   log() {

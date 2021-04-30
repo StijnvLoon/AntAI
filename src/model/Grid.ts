@@ -39,16 +39,6 @@ export class Grid {
         return new EmptyCell(y, x)
     }
 
-    // private getEntity(cell: Cell): Entity {
-    //     if (CustomMath.randomRange(0, 100) < this.foodPercent) {
-    //         return new Food(cell)
-    //     }
-    //     if (CustomMath.randomRange(0, 100) < this.enemyPercent) {
-    //         return new Enemy(cell)
-    //     }
-    //     return undefined
-    // }
-
     public getCellAt(y: number, x: number): Cell {
         return this.cellsMap.get(y + '-' + x)
     }
