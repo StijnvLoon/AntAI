@@ -1,10 +1,10 @@
 import { Cell } from "../Cell";
-import { Entity } from "../Entity";
+import { Entity, EntityType } from "../Entity";
 
 export class Ant extends Entity {
 
     constructor(currentCell: Cell) {
-        super(currentCell, "Ant");
+        super(currentCell, EntityType.ANT);
     }
 
     moveTo(targetCell: Cell) {

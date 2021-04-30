@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Colony } from 'src/model/Colony';
+import { Colony } from 'src/model/entities/Colony';
 import { Grid } from 'src/model/Grid';
 
 @Component({
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
 
   togglePlaying() {
     this.isPlaying = !this.isPlaying
-    if(this.isPlaying) {
+    if (this.isPlaying) {
       this.loop()
     }
   }
@@ -41,17 +41,14 @@ export class AppComponent implements OnInit {
       this.moveAnts()
       this.timer = this.timer + 1
 
-      if(this.isPlaying) {
+      if (this.isPlaying) {
         this.loop()
       }
-    }, this.delay);
+    }, this.delay)
   }
 
   moveAnts() {
-    this.colony.ants.forEach((ant) => {
-      // ant.moveTo(this.colony.grid.getRandomCell())
-      ant.moveTo(this.colony.grid.getRandomNeighbourCell(ant.currentCell))
-    })
+    this.colony.turn()
   }
 
   addAnt() {

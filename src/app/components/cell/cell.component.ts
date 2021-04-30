@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Cell } from 'src/model/Cell';
+import { EntityType } from 'src/model/Entity';
 
 @Component({
   selector: 'app-cell',
@@ -16,14 +17,16 @@ export class CellComponent implements OnInit {
   }
 
   getStyle() {
-    if(this.cell.entity) {
-      switch (this.cell.entity.name) {
-        case "Ant":
+    if (this.cell.entity) {
+      switch (this.cell.entity.type) {
+        case EntityType.ANT:
           return { 'background-color': 'black' }
-        case "Food":
+        case EntityType.FOOD:
           return { 'background-color': 'green' }
-        case "Enemy":
+        case EntityType.ENEMY:
           return { 'background-color': 'red' }
+        case EntityType.COLONY:
+          return { 'background-color': 'yellow' }
         default:
           return {}
       }
