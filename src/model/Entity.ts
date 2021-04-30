@@ -4,6 +4,16 @@ export class Entity {
 
     constructor(
         public currentCell: Cell,
-        public name: string
-    ) { }
+        public type: EntityType
+    ) {
+        currentCell.entity = this
+    }
+}
+
+export enum EntityType {
+    ANT,
+    COLONY,
+    ENEMY,
+    FOOD,
+    OBSTACLE
 }

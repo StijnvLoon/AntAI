@@ -1,9 +1,9 @@
 import { Cell } from "../Cell";
-import { Entity } from "../Entity";
+import { Entity, EntityType } from "../Entity";
 
 export class Food extends Entity {
 
     constructor(currentCell: Cell) {
-        super(currentCell, "Food");
+        super(currentCell, EntityType.FOOD);
     }
 }

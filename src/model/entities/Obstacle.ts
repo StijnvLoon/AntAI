@@ -1,9 +1,9 @@
 import { Cell } from "../Cell";
-import { Entity } from "../Entity";
+import { Entity, EntityType } from "../Entity";
 
 export class Obstacle extends Entity {
 
     constructor(currentCell: Cell) {
-        super(currentCell, "Obstacle");
+        super(currentCell, EntityType.OBSTACLE);
     }
 }
