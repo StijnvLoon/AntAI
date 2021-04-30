@@ -3,7 +3,7 @@ import { Entity } from "./Entity";
 import { Food } from "./entities/Food";
 import { Enemy } from "./entities/Enemy";
 import { CustomMath} from "src/utils/CustomMath";
-
+import { VerboseMode } from "src/utils/VerboseMode"; 
 export class Grid {
 
     public cellsMap: Map<string, Cell>
@@ -22,7 +22,7 @@ export class Grid {
                 this.cellsMap.set(y + '-' + x, cell)
             }
         }
-        console.log(this.cellsMap.values())
+        if (VerboseMode.verbose) console.log(this.cellsMap.values())
     }
 
     private getEntity(cell: Cell): Entity {

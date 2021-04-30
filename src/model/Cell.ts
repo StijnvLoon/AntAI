@@ -1,6 +1,6 @@
 import { Entity } from "./Entity";
 import { CustomMath } from "src/utils/CustomMath"
-
+import { VerboseMode } from "src/utils/VerboseMode"; 
 export class Cell {
 
     public entity: Entity
@@ -18,19 +18,20 @@ export class Cell {
 
 
     public takeFood(entity) {
-        console.log('attempting to take food:')
+        if (VerboseMode.verbose) console.log('found food and obtained:')
         if (this.foodamount > 0) {
             this.foodamount -= 1;
             entity.foodAmount += 1; 
-            console.log('success')
+            if (VerboseMode.verbose) console.log('true')
         } else {
-            console.log('fail')
+            if (VerboseMode.verbose) console.log('false')  
         }
     }
 
 
     public initFood() {
-        console.log('Determine food amount');
+
+        if (VerboseMode.verbose) console.log('Determine food amount');
         if (this.foodamount < 0) {
             this.foodamount = 0;
         } else {
