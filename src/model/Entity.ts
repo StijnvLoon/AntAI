@@ -14,6 +14,4 @@ export enum EntityType {
     ANT,
     COLONY,
     ENEMY,
-    FOOD,
-    OBSTACLE
 }

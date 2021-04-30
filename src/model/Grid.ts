@@ -1,8 +1,11 @@
 import { Cell } from "./Cell";
 import { Entity } from "./Entity";
-import { Food } from "./entities/Food";
+import { FoodCell } from "./cells/FoodCell";
+import { EmptyCell } from "./cells/EmptyCell";
+import { BlockadeCell } from "./cells/BlockadeCell";
 import { Enemy } from "./entities/Enemy";
 import { CustomMath} from "src/utils/CustomMath";
+import { VerboseMode } from "src/utils/VerboseMode";
 
 export class Grid {
 
@@ -17,22 +20,23 @@ export class Grid {
         this.cellsMap = new Map()
         for (var y = 0; y < height; y++) {
             for (var x = 0; x < width; x++) {
-                const cell: Cell = new Cell(y, x)
-                cell.entity = this.getEntity(cell)
-                this.cellsMap.set(y + '-' + x, cell)
+                this.cellsMap.set(y + '-' + x, this.getCell(y, x))
             }
         }
-        console.log(this.cellsMap.values())
+        if (VerboseMode.verbose) console.log(this.cellsMap.values())
     }
 
-    private getEntity(cell: Cell): Entity {
+    private getCell(y: number, x: number): Cell {
         if (CustomMath.randomRange(0, 100) < this.foodPercent) {
-            return new Food(cell)
+            return new FoodCell(y, x)
         }
         if (CustomMath.randomRange(0, 100) < this.enemyPercent) {
-            return new Enemy(cell)
+            const cell = new EmptyCell(y, x)
+            cell.entity = new Enemy(cell)
+            return cell
         }
-        return undefined
+
+        return new EmptyCell(y, x)
     }
 
     public getCellAt(y: number, x: number): Cell {

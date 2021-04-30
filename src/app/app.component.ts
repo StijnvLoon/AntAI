@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   width: number = 45
   height: number = 20
   enemyPercent: number = 4
-  foodPercent: number = 20
+  foodPercent: number = 10
   isPlaying: boolean = false
   delay = 1000
 
@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
   loop() {
     setTimeout(() => {
 
-      this.moveAnts()
+      this.makeTurn()
       this.timer = this.timer + 1
 
       if (this.isPlaying) {
@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
     }, this.delay)
   }
 
-  moveAnts() {
+  makeTurn() {
     this.colony.turn()
   }
 
