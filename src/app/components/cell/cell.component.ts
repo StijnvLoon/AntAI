@@ -43,7 +43,7 @@ export class CellComponent implements OnInit {
       case CellType.BLOCKADE:
         return { 'background-color': 'brown' }
       case CellType.FOOD:
-        const foodType: any = this.cell
+        const foodType: FoodCell = this.cell as FoodCell
 
         if (foodType.foodAmount > 0) {
           var food_storage_percentage = (foodType.foodAmount / foodType.maxfoodamount) * 100;

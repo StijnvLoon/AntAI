@@ -1,6 +1,6 @@
 import { Cell, CellType } from "../Cell";
 import { Ant } from "../entities/Ant";
-import { EntityType } from "../Entity";
+import { Entity, EntityType } from "../Entity";
 
 export class EmptyCell extends Cell {
 
@@ -8,15 +8,15 @@ export class EmptyCell extends Cell {
         public readonly y: number,
         public readonly x: number,
     ) {
-        super(y, x, CellType.EMPTY, (ant: Ant) => {
+        super(y, x, CellType.EMPTY, (entity: Entity) => {
             if(this.entity) {
                 if(this.entity.type == EntityType.ENEMY) {
-                    ant.kill()
+                    entity.kill()
                 } else {
-                    this.acceptEntity(ant)
+                    this.acceptEntity(entity)
                 }
             } else {
-                this.acceptEntity(ant)
+                this.acceptEntity(entity)
             }
         });
     }

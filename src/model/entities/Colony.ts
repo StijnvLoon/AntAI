@@ -19,7 +19,7 @@ export class Colony extends Entity {
     createAnt() {
         const newAnt: Ant = new Ant(this.grid.getRandomCell())
         newAnt.listener = {
-            onAntKilled: () => {
+            onKilled: () => {
                 const index: number = this.ants.indexOf(newAnt)
 
                 delete newAnt.currentCell.entity

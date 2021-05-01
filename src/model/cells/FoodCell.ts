@@ -2,6 +2,7 @@ import { Cell, CellType } from "../Cell";
 import { CustomMath } from "../../utils/CustomMath"
 import { VerboseMode } from "../../utils/VerboseMode";
 import { Ant } from "../entities/Ant";
+import { Entity, EntityType } from "../Entity";
 
 export class FoodCell extends Cell {
 
@@ -12,9 +13,11 @@ export class FoodCell extends Cell {
         public readonly x: number,
         public foodAmount: number = CustomMath.randomRange(-300, 100), //anything below 0 means no food is present
     ) {
-        super(y, x, CellType.FOOD, (ant: Ant) => {
-                this.acceptEntity(ant)
-                this.takeFood(ant)
+        super(y, x, CellType.FOOD, (entity: Entity) => {
+                this.acceptEntity(entity)
+                if(entity.type == EntityType.ANT) {
+                    this.takeFood(entity as Ant)
+                }
             });
         this.initFood(); //initialize food amount 
     }

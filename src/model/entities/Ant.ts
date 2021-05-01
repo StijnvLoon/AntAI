@@ -1,5 +1,5 @@
 import { Cell } from "../Cell";
-import { Entity, EntityType } from "../Entity";
+import { Entity, EntityListener, EntityType } from "../Entity";
 
 export class Ant extends Entity {
 
@@ -8,17 +8,12 @@ export class Ant extends Entity {
     constructor(
         public currentCell: Cell,
         public foodAmount: number = 0,
-        public listener?: AntListener
     ) {
         super(currentCell, EntityType.ANT);
     }
 
     progressRoute() {
         this.moveTo(this.route.shift())
-    }
-
-    moveTo(targetCell: Cell) {
-        targetCell.interact(this)
     }
 
     setNewRoute(route: Cell[]) {
@@ -28,14 +23,4 @@ export class Ant extends Entity {
     onTarget(): boolean {
         return this.route.length == 0
     }
-
-    kill() {
-        if(this.listener) {
-            this.listener.onAntKilled()
-        }
-    }
-}
-
-export interface AntListener {
-    onAntKilled()
 }
