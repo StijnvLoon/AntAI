@@ -1,16 +1,19 @@
 import { Ant } from "./Ant";
 import { Grid } from "../Grid";
 import { Entity, EntityType } from "../Entity";
+import { RouteCalculator } from "../RouteCalculator";
 
 export class Colony extends Entity {
 
     public ants: Ant[]
+    private routeCalculator: RouteCalculator
 
     constructor(
         public grid: Grid
     ) {
         super(grid.getRandomCell(), EntityType.COLONY)
         this.ants = []
+        this.routeCalculator = new RouteCalculator(grid.cellsMap)
     }
 
     createAnt() {
@@ -29,7 +32,12 @@ export class Colony extends Entity {
 
     turn() {
         this.ants.forEach((ant) => {
-            ant.moveTo(this.grid.getRandomNeighbourCell(ant.currentCell))
+            if(ant.onTarget()) {
+                //Tijdelijk naar colony lopen (this.currentCell)
+                ant.setNewRoute(this.routeCalculator.calculateAstar(ant.currentCell, this.currentCell))
+            }
+            ant.progressRoute()
+            // ant.moveTo(this.grid.getRandomNeighbourCell(ant.currentCell))
         })
     }
 }

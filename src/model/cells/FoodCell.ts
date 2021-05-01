@@ -6,16 +6,16 @@ import { Ant } from "../entities/Ant";
 export class FoodCell extends Cell {
 
     public readonly maxfoodamount: number = 10
-    
+
     constructor(
         public readonly y: number,
         public readonly x: number,
         public foodAmount: number = CustomMath.randomRange(-300, 100), //anything below 0 means no food is present
     ) {
         super(y, x, CellType.FOOD, (ant: Ant) => {
-            this.acceptEntity(ant)
-            this.takeFood(ant)
-        });
+                this.acceptEntity(ant)
+                this.takeFood(ant)
+            });
         this.initFood(); //initialize food amount 
     }
 
