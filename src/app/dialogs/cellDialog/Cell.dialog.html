@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>y: {{data.y}} - x: {{data.x}}</h1>
+
+<div mat-dialog-content>
+    <section>
+        <h4>Celltype:</h4>
+        <mat-radio-group [formControl]="cellTypeControl">
+           <mat-radio-button value='0'>Empty</mat-radio-button>
+           <mat-radio-button value='1'>Food</mat-radio-button>
+           <mat-radio-button value='2'>Blockade</mat-radio-button>
+        </mat-radio-group>
+    </section>
+</div>
+
+<div mat-dialog-actions class="actions">
+    <button mat-flat-button color="accent" (click)="close()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="submit()">Submit</button>
+</div>

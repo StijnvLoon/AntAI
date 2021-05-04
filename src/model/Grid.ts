@@ -46,6 +46,20 @@ export class Grid {
         return new EmptyCell(y, x)
     }
 
+    public createCellByType(y: number, x: number, type: CellType): Cell {
+        switch(type) {
+            case CellType.EMPTY: {
+                return new EmptyCell(y, x)
+            }
+            case CellType.FOOD: {
+                return new FoodCell(y, x)
+            }
+            case CellType.BLOCKADE: {
+                return new BlockadeCell(y, x)
+            }
+        }
+    }
+
     public getCellAt(y: number, x: number): Cell {
         return this.cellsMap.get(y + '-' + x)
     }

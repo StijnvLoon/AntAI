@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Colony } from 'src/model/entities/Colony';
 import { Grid } from 'src/model/Grid';
+import { ColonyService } from 'src/app/services/colony.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,7 @@ export class AppComponent implements OnInit {
   colony: Colony
   timer: number = 0
 
-  constructor() {
+  constructor(private colonyService: ColonyService) {
 
   }
 
@@ -67,5 +68,6 @@ export class AppComponent implements OnInit {
         this.blockadePercent
       )
     )
+    this.colonyService.colony = this.colony
   }
 }
