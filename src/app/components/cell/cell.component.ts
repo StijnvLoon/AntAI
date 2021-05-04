@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Cell, CellType } from 'src/model/Cell';
 import { FoodCell } from 'src/model/cells/FoodCell';
 import { EntityType } from 'src/model/Entity';
 import { CustomMath } from 'src/utils/CustomMath';
 import { VerboseMode } from 'src/utils/VerboseMode';
+import { CellDialog } from 'src/app/dialogs/cellDialog/Cell.dialog';
 
 @Component({
   selector: 'app-cell',
@@ -14,7 +16,7 @@ export class CellComponent implements OnInit {
 
   @Input() cell: Cell
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -41,9 +43,9 @@ export class CellComponent implements OnInit {
       case CellType.EMPTY:
         return { 'background-color': 'white' }
       case CellType.BLOCKADE:
-        return { 'background-color': 'brown' }
+        return { 'background-color': '#b26b14' }
       case CellType.FOOD:
-        const foodType: any = this.cell
+        const foodType: FoodCell = this.cell as FoodCell
 
         if (foodType.foodAmount > 0) {
           var food_storage_percentage = (foodType.foodAmount / foodType.maxfoodamount) * 100;
@@ -57,6 +59,18 @@ export class CellComponent implements OnInit {
 
   log() {
     if (VerboseMode.verbose) console.log(this.cell)
+  }
+
+  editCellDialog() {
+    const dialogRef = this.dialog.open(CellDialog, {
+      maxWidth: '800px',
+      width: '80%',
+      data: {
+        y: this.cell.y,
+        x: this.cell.x,
+        startCellType: this.cell.type
+      }
+    })
   }
 
 }

@@ -1,27 +1,28 @@
 import { Cell } from "../Cell";
-import { Entity, EntityType } from "../Entity";
+import { Entity, EntityListener, EntityType } from "../Entity";
 
 export class Ant extends Entity {
+
+    private route: Cell[] = []
+    public readonly maxFoodAmount = 2
 
     constructor(
         public currentCell: Cell,
         public foodAmount: number = 0,
-        public listener?: AntListener
+        public getNextTarget: () => Cell
     ) {
         super(currentCell, EntityType.ANT);
     }
 
-    moveTo(targetCell: Cell) {
-        targetCell.interact(this)
+    progressRoute() {
+        this.moveTo(this.route.shift())
     }
 
-    kill() {
-        if(this.listener) {
-            this.listener.onAntKilled()
-        }
+    setNewRoute(route: Cell[]) {
+        this.route = route
     }
-}
 
-export interface AntListener {
-    onAntKilled()
+    onTarget(): boolean {
+        return this.route.length == 0
+    }
 }

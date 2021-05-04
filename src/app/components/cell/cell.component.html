@@ -1,4 +1,4 @@
-<div class="cell" [ngStyle]="getCellStyle()" (click)="log()">
+<div class="cell" [ngStyle]="getCellStyle()" (click)="editCellDialog()">
     <div class="food" *ngIf="cell.type == 1">
         {{cell.foodAmount}}
     </div>

@@ -3,6 +3,7 @@
     height: <input [(ngModel)]="height">
     enemyPercentage: <input [(ngModel)]="enemyPercent">
     foodPercentage: <input [(ngModel)]="foodPercent">
+    blockadePercentage: <input [(ngModel)]="blockadePercent">
     <button (click)="createNewColony()">Generate</button>
 </div>
 <div>
@@ -10,7 +11,10 @@
     <button (click)="addAnt()">Add ant</button>
     delay: <input [(ngModel)]="delay">
     <button (click)="togglePlaying()">{{isPlaying ? 'Pause' : 'Play'}}</button>
-    <div>timer: {{timer}}s</div>
-    <div>ants: {{colony.ants.length}}</div>
+    <div style="display: flex; flex-direction: row;">
+        <div>timer: {{timer}}s</div>
+        <div style="margin-left: 10px;">ants: {{colony.ants.length}}</div>
+        <div style="margin-left: 10px;">food: {{colony.foodAmount}}</div>
+    </div>
 </div>
 <app-grid [grid]="colony.grid" *ngIf="colony"></app-grid>
