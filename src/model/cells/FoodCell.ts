@@ -29,6 +29,8 @@ export class FoodCell extends Cell {
             if(this.foodAmount == 0) {
                 this.addTurnWithoutFood()
             }
+
+            this.updateCosts()
         });
         this.foodAmount = CustomMath.randomRange(1, this.maxfoodamount)
     }

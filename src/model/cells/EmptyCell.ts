@@ -35,7 +35,9 @@ export class EmptyCell extends Cell {
             } else {
                 this.acceptEntity(entity)
             }
-        }, () => {});
+        }, () => {
+            this.updateCosts()
+        });
     }
 
 }

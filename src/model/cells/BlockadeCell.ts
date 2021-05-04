@@ -10,6 +10,7 @@ export class BlockadeCell extends Cell {
         super(y, x, CellType.BLOCKADE,
             (ant: Ant) => {
             
-        }, () => {});
+        }, () => {
+        });
     }
 }
