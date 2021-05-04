@@ -8,7 +8,8 @@ export class Cell {
         public readonly y: number,
         public readonly x: number,
         public type: CellType,
-        public interact
+        public interact,
+        public notify: () => void
     ) {
     }
 

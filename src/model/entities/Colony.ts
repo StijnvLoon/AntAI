@@ -3,11 +3,12 @@ import { Grid } from "../Grid";
 import { Entity, EntityType } from "../Entity";
 import { RouteCalculator } from "../RouteCalculator";
 import { Cell, CellType } from "../Cell";
+import { FoodCell } from "../cells/FoodCell";
 
 export class Colony extends Entity {
 
     public ants: Ant[]
-    public foodAmount: number
+    public foodAmount: number = 0
     private routeCalculator: RouteCalculator
 
     constructor(
@@ -19,7 +20,16 @@ export class Colony extends Entity {
     }
 
     createAnt() {
-        const newAnt: Ant = new Ant(this.grid.getRandomEmptyCell())
+        const newAnt: Ant = new Ant(
+            this.grid.getRandomEmptyCell(),
+            0,
+            () => {
+                if (newAnt.foodAmount == newAnt.maxFoodAmount) {
+                    return this.currentCell
+                } else {
+                    return this.grid.getNearestCellByType(newAnt, CellType.FOOD)
+                }
+            })
         newAnt.listener = {
             onKilled: () => {
                 const index: number = this.ants.indexOf(newAnt)
@@ -33,20 +43,28 @@ export class Colony extends Entity {
     }
 
     turn() {
+        //update ants
         this.ants.forEach((ant) => {
-            if(ant.onTarget()) {
-                //Tijdelijk naar colony lopen (this.currentCell)
-                var targetCell: Cell
-                if(ant.foodAmount == ant.maxFoodAmount) {
-                    targetCell = this.currentCell
-                } else {
-                    targetCell = this.grid.getNearestCellByType(ant, CellType.FOOD)
-                }
-                
-                ant.setNewRoute(this.routeCalculator.calculateAstar(ant.currentCell, targetCell))
+            if (ant.onTarget()) {
+                ant.setNewRoute(this.routeCalculator.calculateAstar(ant.currentCell, ant.getNextTarget()))
             }
             ant.progressRoute()
-            // ant.moveTo(this.grid.getRandomNeighbourCell(ant.currentCell))
         })
+
+        //notify cells
+        Array.from(this.grid.cellsMap.values()).forEach((cell) => {
+            cell.notify()
+        })
+        // const cells = Array.from(this.grid.cellsMap.values()).filter((cell) => {
+        //     return cell.type == CellType.FOOD
+        // })
+
+        // cells.forEach((cell) => {
+        // const foodCell: FoodCell = cell as FoodCell
+
+        // if(foodCell.foodAmount == 0) {
+        //     foodCell.addTurnWithoutFood()
+        // }
+        // })
     }
 }

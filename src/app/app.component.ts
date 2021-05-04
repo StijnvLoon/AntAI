@@ -13,11 +13,11 @@ export class AppComponent implements OnInit {
 
   width: number = 45
   height: number = 20
-  enemyPercent: number = 4
+  enemyPercent: number = 0
   foodPercent: number = 10
   blockadePercent: number = 10
   isPlaying: boolean = false
-  delay = 1000
+  delay = 50
 
   colony: Colony
   timer: number = 0

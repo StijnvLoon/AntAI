@@ -8,12 +8,15 @@ export class FoodCell extends Cell {
 
     public readonly maxfoodamount: number = 10
     public foodAmount: number
+    public turnsWithoutFood: number = 0
+    private readonly maxTurnsWithoutFood = 100
 
     constructor(
         public readonly y: number,
         public readonly x: number,
     ) {
-        super(y, x, CellType.FOOD, (entity: Entity) => {
+        super(y, x, CellType.FOOD,
+            (entity: Entity) => {
             this.acceptEntity(entity)
             if (entity.type == EntityType.ANT) {
                 const ant = entity as Ant
@@ -21,6 +24,10 @@ export class FoodCell extends Cell {
                 if(ant.foodAmount < ant.maxFoodAmount) {
                     this.takeFood(ant)
                 }
+            }
+        }, () => {
+            if(this.foodAmount == 0) {
+                this.addTurnWithoutFood()
             }
         });
         this.foodAmount = CustomMath.randomRange(1, this.maxfoodamount)
@@ -35,5 +42,17 @@ export class FoodCell extends Cell {
         } else {
             if (VerboseMode.verbose) console.log('false')
         }
+    }
+
+    public addTurnWithoutFood() {
+        this.turnsWithoutFood = this.turnsWithoutFood + 1
+        if(this.turnsWithoutFood == this.maxTurnsWithoutFood) {
+            this.refillFood(CustomMath.randomRange(1, this.maxfoodamount))
+        }
+    }
+
+    public refillFood(amount: number) {
+        this.foodAmount = amount
+        this.turnsWithoutFood = 0
     }
 }

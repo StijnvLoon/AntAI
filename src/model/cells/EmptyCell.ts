@@ -9,7 +9,8 @@ export class EmptyCell extends Cell {
         public readonly y: number,
         public readonly x: number,
     ) {
-        super(y, x, CellType.EMPTY, (entity: Entity) => {
+        super(y, x, CellType.EMPTY,
+            (entity: Entity) => {
 
             if(this.entity) {
                 switch(this.entity.type) {
@@ -34,7 +35,7 @@ export class EmptyCell extends Cell {
             } else {
                 this.acceptEntity(entity)
             }
-        });
+        }, () => {});
     }
 
 }
