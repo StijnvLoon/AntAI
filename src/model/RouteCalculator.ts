@@ -1,4 +1,4 @@
-import { Cell } from './Cell';
+import { Cell, CellType } from './Cell';
 import { Grid } from './Grid';
 
 export class RouteCalculator {
@@ -56,8 +56,7 @@ export class RouteCalculator {
             surroundingCells.forEach(cell => {
 
                 //add exceptions, like blockades, here!
-                
-                if (cell) {
+                if (cell && cell.type !== CellType.BLOCKADE) {
                     const childItem = new GridItem(cell, 0, 0, 0)
                     childItem.parent = currentItem
                     children.push(childItem)

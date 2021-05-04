@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   height: number = 20
   enemyPercent: number = 4
   foodPercent: number = 10
+  blockadePercent: number = 10
   isPlaying: boolean = false
   delay = 1000
 
@@ -62,7 +63,9 @@ export class AppComponent implements OnInit {
         this.width,
         this.height,
         this.foodPercent,
-        this.enemyPercent)
+        this.enemyPercent,
+        this.blockadePercent
+      )
     )
   }
 }

@@ -41,7 +41,7 @@ export class CellComponent implements OnInit {
       case CellType.EMPTY:
         return { 'background-color': 'white' }
       case CellType.BLOCKADE:
-        return { 'background-color': 'brown' }
+        return { 'background-color': '#b26b14' }
       case CellType.FOOD:
         const foodType: FoodCell = this.cell as FoodCell
 

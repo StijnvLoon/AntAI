@@ -11,13 +11,13 @@ export class Colony extends Entity {
     constructor(
         public grid: Grid
     ) {
-        super(grid.getRandomCell(), EntityType.COLONY)
+        super(grid.getRandomEmptyCell(), EntityType.COLONY)
         this.ants = []
         this.routeCalculator = new RouteCalculator(grid.cellsMap)
     }
 
     createAnt() {
-        const newAnt: Ant = new Ant(this.grid.getRandomCell())
+        const newAnt: Ant = new Ant(this.grid.getRandomEmptyCell())
         newAnt.listener = {
             onKilled: () => {
                 const index: number = this.ants.indexOf(newAnt)
