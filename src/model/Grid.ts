@@ -109,4 +109,32 @@ export class Grid {
                 return this.getCellAt(currentCell.y, currentCell.x - 1)
         }
     }
+
+    public getNearestCellByType(entity: Entity, cellType: CellType): Cell {
+        var cells: Cell[];
+
+        if(cellType == CellType.FOOD) {
+            cells = Array.from(this.cellsMap.values()).filter((cell) => {
+                const foodCell = cell as FoodCell
+                return cell.type == cellType && foodCell.foodAmount > 0
+            })
+        } else {
+            cells = Array.from(this.cellsMap.values()).filter((cell) => cell.type == cellType)
+        }
+
+        return cells.sort((a, b) => {
+            const ayDiff = Math.abs(entity.currentCell.y - a.y)     //5
+            const axDiff = Math.abs(entity.currentCell.x - a.x)     //2
+            const byDiff = Math.abs(entity.currentCell.y - b.y)     //6
+            const bxDiff = Math.abs(entity.currentCell.x - b.x)     //1
+
+            if((ayDiff + axDiff) > (byDiff + bxDiff)) {
+                return 1
+            }
+            if((ayDiff + axDiff) < (byDiff + bxDiff)) {
+                return -1
+            }
+            return 0
+        })[0]
+    }
 }

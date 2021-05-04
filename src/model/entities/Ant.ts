@@ -4,6 +4,7 @@ import { Entity, EntityListener, EntityType } from "../Entity";
 export class Ant extends Entity {
 
     private route: Cell[] = []
+    public readonly maxFoodAmount = 2
 
     constructor(
         public currentCell: Cell,

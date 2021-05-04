@@ -7,19 +7,23 @@ import { Entity, EntityType } from "../Entity";
 export class FoodCell extends Cell {
 
     public readonly maxfoodamount: number = 10
+    public foodAmount: number
 
     constructor(
         public readonly y: number,
         public readonly x: number,
-        public foodAmount: number = CustomMath.randomRange(-300, 100), //anything below 0 means no food is present
     ) {
         super(y, x, CellType.FOOD, (entity: Entity) => {
-                this.acceptEntity(entity)
-                if(entity.type == EntityType.ANT) {
-                    this.takeFood(entity as Ant)
+            this.acceptEntity(entity)
+            if (entity.type == EntityType.ANT) {
+                const ant = entity as Ant
+
+                if(ant.foodAmount < ant.maxFoodAmount) {
+                    this.takeFood(ant)
                 }
-            });
-        this.initFood(); //initialize food amount 
+            }
+        });
+        this.foodAmount = CustomMath.randomRange(1, this.maxfoodamount)
     }
 
     public takeFood(ant: Ant) {
@@ -30,16 +34,6 @@ export class FoodCell extends Cell {
             if (VerboseMode.verbose) console.log('true')
         } else {
             if (VerboseMode.verbose) console.log('false')
-        }
-    }
-
-    public initFood() {
-
-        if (VerboseMode.verbose) console.log('Determine food amount');
-        if (this.foodAmount < 0) {
-            this.foodAmount = 0;
-        } else {
-            this.foodAmount = CustomMath.randomRange(1, this.maxfoodamount)
         }
     }
 }
