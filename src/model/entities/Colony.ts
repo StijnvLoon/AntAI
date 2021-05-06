@@ -2,14 +2,16 @@ import { Ant } from "./Ant";
 import { Grid } from "../Grid";
 import { Entity, EntityType } from "../Entity";
 import { RouteCalculator } from "../RouteCalculator";
-import { Cell, CellType } from "../Cell";
-import { FoodCell } from "../cells/FoodCell";
+import { CellType } from "../Cell";
+import { GathererAnt } from "./ants/GathererAnt";
+import { AntFactory } from "../AntFactory";
 
 export class Colony extends Entity {
 
     public ants: Ant[]
     public foodAmount: number = 0
     private routeCalculator: RouteCalculator
+    private antFactory: AntFactory = new AntFactory()
 
     constructor(
         public grid: Grid
@@ -19,26 +21,44 @@ export class Colony extends Entity {
         this.routeCalculator = new RouteCalculator(grid.cellsMap)
     }
 
-    createAnt() {
-        const newAnt: Ant = new Ant(
+    createGathererAnt() {
+        const newAnt = this.antFactory.createGathererAnt(
             this.grid.getRandomEmptyCell(),
-            0,
+            this.currentCell,
+            this.currentCell,
             () => {
-                if (newAnt.foodAmount == newAnt.maxFoodAmount) {
-                    return this.currentCell
-                } else {
-                    return this.grid.getNearestCellByType(newAnt, CellType.FOOD)
-                }
-            })
-        newAnt.listener = {
-            onKilled: () => {
+                return this.grid.getNearestCellByType(newAnt.currentCell, CellType.FOOD)
+            },
+            () => {
                 const index: number = this.ants.indexOf(newAnt)
 
                 delete newAnt.currentCell.entity
                 delete this.ants[index]
                 this.ants.splice(index, 1)
             }
-        }
+        )
+
+        this.ants.push(newAnt)
+    }
+
+    createSoldierAnt() {
+        const newAnt = this.antFactory.createSoldierAnt(
+            this.grid.getRandomEmptyCell(),
+            this.currentCell,
+            this.currentCell,
+            () => {
+                const test = this.grid.getNearestCellByEntity(newAnt.currentCell, EntityType.ENEMY)
+                return test
+            },
+            () => {
+                const index: number = this.ants.indexOf(newAnt)
+
+                delete newAnt.currentCell.entity
+                delete this.ants[index]
+                this.ants.splice(index, 1)
+            }
+        )
+
         this.ants.push(newAnt)
     }
 
@@ -55,16 +75,5 @@ export class Colony extends Entity {
         Array.from(this.grid.cellsMap.values()).forEach((cell) => {
             cell.notify()
         })
-        // const cells = Array.from(this.grid.cellsMap.values()).filter((cell) => {
-        //     return cell.type == CellType.FOOD
-        // })
-
-        // cells.forEach((cell) => {
-        // const foodCell: FoodCell = cell as FoodCell
-
-        // if(foodCell.foodAmount == 0) {
-        //     foodCell.addTurnWithoutFood()
-        // }
-        // })
     }
 }

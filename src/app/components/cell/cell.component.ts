@@ -6,6 +6,7 @@ import { EntityType } from 'src/model/Entity';
 import { CustomMath } from 'src/utils/CustomMath';
 import { VerboseMode } from 'src/utils/VerboseMode';
 import { CellDialog } from 'src/app/dialogs/cellDialog/Cell.dialog';
+import { Ant, AntType } from 'src/model/entities/Ant';
 
 @Component({
   selector: 'app-cell',
@@ -23,7 +24,7 @@ export class CellComponent implements OnInit {
 
   getEntityStyle() {
     if (this.cell.entity) {
-      switch (this.cell.entity.type) {
+      switch (this.cell.entity.entityType) {
         case EntityType.ANT:
           return { 'background-color': 'black' }
         case EntityType.ENEMY:
@@ -39,29 +40,60 @@ export class CellComponent implements OnInit {
   }
 
   getCellStyle() {
-    switch (this.cell.type) {
-      case CellType.EMPTY:
-        return { 'background-color': 'white' }
-      case CellType.BLOCKADE:
-        return { 'background-color': '#b26b14' }
-      case CellType.FOOD:
-        const foodType: FoodCell = this.cell as FoodCell
+    const cellcost = this.cell.costs;
+    const cellbasecost = this.cell.defaultCost;
+    var background_settings = "";
 
-        if (foodType.foodAmount > 0) {
-          var food_storage_percentage = (foodType.foodAmount / foodType.maxfoodamount) * 100;
-          var calculated_lightness = CustomMath.clamp(100 - food_storage_percentage, 30, 50);
-          return { 'background-color': `hsl(136,100%,${calculated_lightness}%)` };
+    switch (this.cell.type) {
+      case CellType.EMPTY: {
+        //calculate the darkness of a cell based on the cell cost.
+        if (this.cell.costs !== undefined) { //error handling
+          var cellcost_percentage = (cellcost / cellbasecost) * 100; //get relative cost percentage 
+          var calculated_darkness = CustomMath.clamp(cellcost_percentage, 1, 100); //calculate darkness of cell/tile
+          background_settings = `hsl(200, 20%, ${calculated_darkness}%)` //store colouring in background setting 
+          break;
         }
-      default:
-        return {}
+      }
+
+      case CellType.BLOCKADE: {
+        return { 'background-color': '#b26b14' } //blockade cannot be traversed, thus cell costs do not matter
+      }
+
+      case CellType.FOOD: {
+        const foodType: FoodCell = this.cell as FoodCell
+        if (foodType.foodAmount > 0) {
+          var food_storage_percentage = (foodType.foodAmount / foodType.maxfoodamount) * 100; //calculate food storage percentage
+          var calculated_lightness = CustomMath.clamp(100 - food_storage_percentage, 30, 50); //calculate lightness of cell/tile
+          background_settings = `hsl(136,100%,${calculated_lightness}%)`; //overwrite previously defined background setting --> from empty cell
+        }
+        break;
+      }
+
+    }
+    return { 'background-color': background_settings }; //append background settings
+  }
+
+  getAntStyle() {
+    if (this.cell.entity) {
+      if (this.cell.entity.entityType == EntityType.ANT) {
+        const ant = this.cell.entity as Ant
+
+        switch (ant.antType) {
+          case AntType.GATHERER: {
+            return { 'background-color': 'green' }
+          }
+          case AntType.SOLDIER: {
+            return { 'background-color': 'red' }
+          }
+        }
+      }
+    } else {
+      return {}
     }
   }
 
-  log() {
-    if (VerboseMode.verbose) console.log(this.cell)
-  }
-
   editCellDialog() {
+    console.log(this.cell)
     const dialogRef = this.dialog.open(CellDialog, {
       maxWidth: '800px',
       width: '80%',

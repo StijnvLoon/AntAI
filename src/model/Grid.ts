@@ -1,5 +1,5 @@
 import { Cell, CellType } from "./Cell";
-import { Entity } from "./Entity";
+import { Entity, EntityType } from "./Entity";
 import { FoodCell } from "./cells/FoodCell";
 import { EmptyCell } from "./cells/EmptyCell";
 import { BlockadeCell } from "./cells/BlockadeCell";
@@ -35,7 +35,13 @@ export class Grid {
         //set enemy
         if (CustomMath.randomRange(0, 100) < this.enemyPercent) {
             const cell = new EmptyCell(y, x)
-            cell.entity = new Enemy(cell)
+            const enemy = new Enemy(cell)
+            enemy.listener = {
+                onKilled: () => {
+                    delete enemy.currentCell.entity
+                }
+            }
+            cell.entity = enemy
             return cell
         }
         //set blockade
@@ -110,8 +116,8 @@ export class Grid {
         }
     }
 
-    public getNearestCellByType(entity: Entity, cellType: CellType): Cell {
-        var cells: Cell[];
+    public getNearestCellByType(cell: Cell, cellType: CellType): Cell {
+        var cells: Cell[]
 
         if(cellType == CellType.FOOD) {
             cells = Array.from(this.cellsMap.values()).filter((cell) => {
@@ -122,11 +128,23 @@ export class Grid {
             cells = Array.from(this.cellsMap.values()).filter((cell) => cell.type == cellType)
         }
 
+        return this.sortCellsByDistanceToCell(cell, cells)[0]
+    }
+
+    public getNearestCellByEntity(cell: Cell, entityType: EntityType) {
+        const cells = Array.from(this.cellsMap.values()).filter((cell) => 
+            cell.entity && cell.entity.entityType == entityType
+        )
+
+        return this.sortCellsByDistanceToCell(cell, cells)[0]
+    }
+
+    private sortCellsByDistanceToCell(targetCell: Cell, cells: Cell[]): Cell[] {
         return cells.sort((a, b) => {
-            const ayDiff = Math.abs(entity.currentCell.y - a.y)     //5
-            const axDiff = Math.abs(entity.currentCell.x - a.x)     //2
-            const byDiff = Math.abs(entity.currentCell.y - b.y)     //6
-            const bxDiff = Math.abs(entity.currentCell.x - b.x)     //1
+            const ayDiff = Math.abs(targetCell.y - a.y)     //5
+            const axDiff = Math.abs(targetCell.x - a.x)     //2
+            const byDiff = Math.abs(targetCell.y - b.y)     //6
+            const bxDiff = Math.abs(targetCell.x - b.x)     //1
 
             if((ayDiff + axDiff) > (byDiff + bxDiff)) {
                 return 1
@@ -135,6 +153,6 @@ export class Grid {
                 return -1
             }
             return 0
-        })[0]
+        })
     }
 }

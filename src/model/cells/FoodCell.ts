@@ -1,8 +1,9 @@
 import { Cell, CellType } from "../Cell";
 import { CustomMath } from "../../utils/CustomMath"
 import { VerboseMode } from "../../utils/VerboseMode";
-import { Ant } from "../entities/Ant";
+import { Ant, AntType } from "../entities/Ant";
 import { Entity, EntityType } from "../Entity";
+import { GathererAnt } from "../entities/ants/GathererAnt";
 
 export class FoodCell extends Cell {
 
@@ -17,27 +18,33 @@ export class FoodCell extends Cell {
     ) {
         super(y, x, CellType.FOOD,
             (entity: Entity) => {
-            this.acceptEntity(entity)
-            if (entity.type == EntityType.ANT) {
-                const ant = entity as Ant
+                this.replaceEntity(entity)
+                if (entity.entityType == EntityType.ANT) {
+                    const ant = entity as Ant
 
-                if(ant.foodAmount < ant.maxFoodAmount) {
-                    this.takeFood(ant)
+                    if (ant.antType == AntType.GATHERER) {
+                        const gatherer = ant as GathererAnt
+
+                        if (gatherer.foodAmount < gatherer.maxFoodAmount) {
+                            this.takeFood(gatherer)
+                        }
+                    }
                 }
-            }
-        }, () => {
-            if(this.foodAmount == 0) {
-                this.addTurnWithoutFood()
-            }
-        });
+            }, () => {
+                if (this.foodAmount == 0) {
+                    this.addTurnWithoutFood()
+                }
+
+                this.updateCosts()
+            });
         this.foodAmount = CustomMath.randomRange(1, this.maxfoodamount)
     }
 
-    public takeFood(ant: Ant) {
+    public takeFood(gatherer: GathererAnt) {
         if (VerboseMode.verbose) console.log('found food and obtained:')
         if (this.foodAmount > 0) {
             this.foodAmount -= 1;
-            ant.foodAmount += 1;
+            gatherer.foodAmount += 1;
             if (VerboseMode.verbose) console.log('true')
         } else {
             if (VerboseMode.verbose) console.log('false')
@@ -46,7 +53,7 @@ export class FoodCell extends Cell {
 
     public addTurnWithoutFood() {
         this.turnsWithoutFood = this.turnsWithoutFood + 1
-        if(this.turnsWithoutFood == this.maxTurnsWithoutFood) {
+        if (this.turnsWithoutFood == this.maxTurnsWithoutFood) {
             this.refillFood(CustomMath.randomRange(1, this.maxfoodamount))
         }
     }

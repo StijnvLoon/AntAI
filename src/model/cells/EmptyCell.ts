@@ -1,5 +1,6 @@
 import { Cell, CellType } from "../Cell";
-import { Ant } from "../entities/Ant";
+import { Ant, AntType } from "../entities/Ant";
+import { GathererAnt } from "../entities/ants/GathererAnt";
 import { Colony } from "../entities/Colony";
 import { Entity, EntityType } from "../Entity";
 
@@ -11,31 +12,57 @@ export class EmptyCell extends Cell {
     ) {
         super(y, x, CellType.EMPTY,
             (entity: Entity) => {
-
-            if(this.entity) {
-                switch(this.entity.type) {
-                    case EntityType.ENEMY: {
-                        entity.kill()
+                switch (entity.entityType) {
+                    case EntityType.ANT: {
+                        this.handleAnt(entity as Ant)
                         break
                     }
                     case EntityType.COLONY: {
-                        const colony: Colony = this.entity as Colony
-
-                        if(entity.type == EntityType.ANT) {
-                            const ant: Ant = entity as Ant
-                            colony.foodAmount = colony.foodAmount + ant.foodAmount
-                            ant.foodAmount = 0
-                        }
+                        //handle methode maken wanneer nodig
                         break
                     }
-                    default: {
-                        this.acceptEntity(entity)
+                    case EntityType.ENEMY: {
+                        //handle methode maken wanneer nodig
+                        break
                     }
                 }
-            } else {
-                this.acceptEntity(entity)
+            }, () => { this.updateCosts(); });
+    }
+
+    handleAnt(ant: Ant) {
+        if (this.entity) {
+            switch (this.entity.entityType) {
+                case EntityType.ANT: {
+                    this.replaceEntity(ant)
+                    break
+                }
+                case EntityType.COLONY: {
+
+                    if(ant.antType == AntType.GATHERER) {
+                        const gatherer = ant as GathererAnt
+                        const colony: Colony = this.entity as Colony
+                        colony.foodAmount = colony.foodAmount + gatherer.foodAmount
+                        gatherer.foodAmount = 0
+                        break
+                    }
+                    break
+
+                }
+                case EntityType.ENEMY: {
+
+                    if(ant.antType == AntType.GATHERER) {
+                        ant.kill()
+                    }
+                    if(ant.antType == AntType.SOLDIER) {
+                        this.entity.kill()
+                    }
+
+                    break
+                }
             }
-        }, () => {});
+        } else {
+            this.replaceEntity(ant)
+        }
     }
 
 }

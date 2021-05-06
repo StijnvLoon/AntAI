@@ -12,7 +12,7 @@ export class RouteCalculator {
         const targetItem = new GridItem(targetCell, 0, 0, 0)
 
         const openItems: GridItem[] = []
-        const closedItems: GridItem[] = []
+        const closedCells: Cell[] = []
 
         openItems.push(startItem)
 
@@ -30,7 +30,7 @@ export class RouteCalculator {
 
             //move currentcell to closedCells
             openItems.splice(currentIndex, 1)
-            closedItems.push(currentItem)
+            closedCells.push(currentItem.cell)
 
             //if target is found
             if (currentItem.cell == targetItem.cell) {
@@ -56,7 +56,7 @@ export class RouteCalculator {
             surroundingCells.forEach(cell => {
 
                 //add exceptions, like blockades, here!
-                if (cell && cell.type !== CellType.BLOCKADE) {
+                if (cell !== undefined && cell.type !== CellType.BLOCKADE) {
                     const childItem = new GridItem(cell, 0, 0, 0)
                     childItem.parent = currentItem
                     children.push(childItem)
@@ -68,12 +68,12 @@ export class RouteCalculator {
                 const childItem = children[i]
 
                 //go to next child if child is not in closedcells
-                if (!closedItems.includes(childItem)) {
+                if (!closedCells.includes(childItem.cell)) {
 
                     //greate f, g, h
                     childItem.g = currentItem.g + 1
                     childItem.h = Math.pow(currentItem.cell.x - targetItem.cell.x, 2) + Math.pow(currentItem.cell.y - targetItem.cell.y, 2)
-                    childItem.f = childItem.g + childItem.h
+                    childItem.f = childItem.g + childItem.h + childItem.cell.costs
 
                     //add child to openlist if not already
                     if (!openItems.includes(childItem)) {
@@ -82,6 +82,7 @@ export class RouteCalculator {
                 }
             }
         }
+        return []
     }
 }
 

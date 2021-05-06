@@ -4,7 +4,7 @@ export class Entity {
 
     constructor(
         public currentCell: Cell,
-        public type: EntityType,
+        public entityType: EntityType,
         public listener?: EntityListener
     ) {
         currentCell.entity = this
