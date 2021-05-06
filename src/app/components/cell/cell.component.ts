@@ -39,22 +39,36 @@ export class CellComponent implements OnInit {
   }
 
   getCellStyle() {
+    const cellcost = this.cell.costs;
+    const cellbasecost = this.cell.defaultCost;
+    var background_settings = "";
+
+
+
+
     switch (this.cell.type) {
       case CellType.EMPTY:
-        return { 'background-color': 'white' }
+      //calculate the darkness of a cell based on the cell cost.
+      if (this.cell.costs !== undefined) { //error handling
+      var cellcost_percentage = (cellcost / cellbasecost) * 100; //get relative cost percentage 
+      var calculated_darkness = CustomMath.clamp(cellcost_percentage, 1,100); //calculate darkness of cell/tile
+      background_settings = `hsl(200, 20%, ${calculated_darkness}%)` //store colouring in background setting 
+      break;
+      }
+
       case CellType.BLOCKADE:
-        return { 'background-color': '#b26b14' }
+        return { 'background-color': '#b26b14' } //blockade cannot be traversed, thus cell costs do not matter
+
       case CellType.FOOD:
         const foodType: FoodCell = this.cell as FoodCell
-
+        console.log(this.cell.costs);
         if (foodType.foodAmount > 0) {
-          var food_storage_percentage = (foodType.foodAmount / foodType.maxfoodamount) * 100;
-          var calculated_lightness = CustomMath.clamp(100 - food_storage_percentage, 30, 50);
-          return { 'background-color': `hsl(136,100%,${calculated_lightness}%)` };
+          var food_storage_percentage = (foodType.foodAmount / foodType.maxfoodamount) * 100; //calculate food storage percentage
+          var calculated_lightness = CustomMath.clamp(100 - food_storage_percentage, 30, 50); //calculate lightness of cell/tile
+          background_settings = `hsl(136,100%,${calculated_lightness}%)`; //overwrite previously defined background setting --> from empty cell
         }
-      default:
-        return {}
     }
+    return {'background-color' : background_settings}; //append background settings
   }
 
   log() {
