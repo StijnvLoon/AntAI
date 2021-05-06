@@ -25,7 +25,7 @@ export class EmptyCell extends Cell {
                         break
                     }
                 }
-            }, () => { });
+            }, () => { this.updateCosts(); });
     }
 
     handleAnt(ant: Ant) {
@@ -49,9 +49,7 @@ export class EmptyCell extends Cell {
         } else {
             this.replaceEntity(ant)
         }
-    }, () => {
-        this.updateCosts();
-    });
+    }
 
 }
 
