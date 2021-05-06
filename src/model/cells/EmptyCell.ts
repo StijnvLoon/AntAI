@@ -26,7 +26,7 @@ export class EmptyCell extends Cell {
                         break
                     }
                 }
-            }, () => { });
+            }, () => { this.updateCosts(); });
     }
 
     handleAnt(ant: Ant) {

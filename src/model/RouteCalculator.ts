@@ -73,7 +73,7 @@ export class RouteCalculator {
                     //greate f, g, h
                     childItem.g = currentItem.g + 1
                     childItem.h = Math.pow(currentItem.cell.x - targetItem.cell.x, 2) + Math.pow(currentItem.cell.y - targetItem.cell.y, 2)
-                    childItem.f = childItem.g + childItem.h
+                    childItem.f = childItem.g + childItem.h + childItem.cell.costs
 
                     //add child to openlist if not already
                     if (!openItems.includes(childItem)) {
