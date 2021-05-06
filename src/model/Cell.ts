@@ -10,12 +10,12 @@ export class Cell {
         public readonly y: number,
         public readonly x: number,
         public type: CellType,
-        public interact,
+        public interact: (entity: Entity) => void,
         public notify: () => void
     ) {
     }
-
-    acceptEntity(entity: Entity) {
+    
+    replaceEntity(entity: Entity) {
         entity.currentCell.entity = undefined
         entity.currentCell = this
         this.entity = entity

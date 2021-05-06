@@ -9,6 +9,7 @@ export class Ant extends Entity {
     constructor(
         public currentCell: Cell,
         public foodAmount: number = 0,
+        public noTargetCell: Cell,
         public getNextTarget: () => Cell
     ) {
         super(currentCell, EntityType.ANT);

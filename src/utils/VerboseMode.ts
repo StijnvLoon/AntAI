@@ -1,3 +1,3 @@
 export class VerboseMode {
-    public static verbose = true;
+    public static verbose = false;
 }

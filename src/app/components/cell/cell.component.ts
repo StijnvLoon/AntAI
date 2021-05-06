@@ -76,6 +76,7 @@ export class CellComponent implements OnInit {
   }
 
   editCellDialog() {
+    console.log(this.cell)
     const dialogRef = this.dialog.open(CellDialog, {
       maxWidth: '800px',
       width: '80%',

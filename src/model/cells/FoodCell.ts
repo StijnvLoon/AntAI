@@ -17,7 +17,7 @@ export class FoodCell extends Cell {
     ) {
         super(y, x, CellType.FOOD,
             (entity: Entity) => {
-            this.acceptEntity(entity)
+            this.replaceEntity(entity)
             if (entity.type == EntityType.ANT) {
                 const ant = entity as Ant
 

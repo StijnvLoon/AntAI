@@ -11,34 +11,47 @@ export class EmptyCell extends Cell {
     ) {
         super(y, x, CellType.EMPTY,
             (entity: Entity) => {
-
-            if(this.entity) {
-                switch(this.entity.type) {
-                    case EntityType.ENEMY: {
-                        entity.kill()
+                switch (entity.type) {
+                    case EntityType.ANT: {
+                        this.handleAnt(entity as Ant)
                         break
                     }
                     case EntityType.COLONY: {
-                        const colony: Colony = this.entity as Colony
-
-                        if(entity.type == EntityType.ANT) {
-                            const ant: Ant = entity as Ant
-                            colony.foodAmount = colony.foodAmount + ant.foodAmount
-                            ant.foodAmount = 0
-                        }
+                        //handle methode maken wanneer nodig
                         break
                     }
-                    default: {
-                        this.acceptEntity(entity)
+                    case EntityType.ENEMY: {
+                        //handle methode maken wanneer nodig
+                        break
                     }
                 }
-            } else {
-                this.acceptEntity(entity)
-            }
-        }, () => {
-            this.updateCosts()
-        });
+            }, () => { });
     }
+
+    handleAnt(ant: Ant) {
+        if (this.entity) {
+            switch (this.entity.type) {
+                case EntityType.ANT: {
+                    this.replaceEntity(ant)
+                    break
+                }
+                case EntityType.COLONY: {
+                    const colony: Colony = this.entity as Colony
+                    colony.foodAmount = colony.foodAmount + ant.foodAmount
+                    ant.foodAmount = 0
+                    break
+                }
+                case EntityType.ENEMY: {
+                    ant.kill()
+                    break
+                }
+            }
+        } else {
+            this.replaceEntity(ant)
+        }
+    }, () => {
+        this.updateCosts();
+    });
 
 }
 
