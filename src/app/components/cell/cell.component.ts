@@ -6,6 +6,7 @@ import { EntityType } from 'src/model/Entity';
 import { CustomMath } from 'src/utils/CustomMath';
 import { VerboseMode } from 'src/utils/VerboseMode';
 import { CellDialog } from 'src/app/dialogs/cellDialog/Cell.dialog';
+import { Ant, AntType } from 'src/model/entities/Ant';
 
 @Component({
   selector: 'app-cell',
@@ -23,7 +24,7 @@ export class CellComponent implements OnInit {
 
   getEntityStyle() {
     if (this.cell.entity) {
-      switch (this.cell.entity.type) {
+      switch (this.cell.entity.entityType) {
         case EntityType.ANT:
           return { 'background-color': 'black' }
         case EntityType.ENEMY:
@@ -54,6 +55,25 @@ export class CellComponent implements OnInit {
         }
       default:
         return {}
+    }
+  }
+
+  getAntStyle() {
+    if (this.cell.entity) {
+      if(this.cell.entity.entityType == EntityType.ANT) {
+        const ant = this.cell.entity as Ant
+
+        switch(ant.antType) {
+          case AntType.GATHERER: {
+            return { 'background-color': 'green' }
+          }
+          case AntType.SOLDIER: {
+            return { 'background-color': 'red' }
+          }
+        }
+      }
+    } else {
+      return {}
     }
   }
 

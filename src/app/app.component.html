@@ -8,7 +8,8 @@
 </div>
 <div>
     <button (click)="makeTurn()">make turn</button>
-    <button (click)="addAnt()">Add ant</button>
+    <button (click)="colony.createGathererAnt()">Add gatherer</button>
+    <button (click)="colony.createSoldierAnt()">Add soldier</button>
     delay: <input [(ngModel)]="delay">
     <button (click)="togglePlaying()">{{isPlaying ? 'Pause' : 'Play'}}</button>
     <div style="display: flex; flex-direction: row;">

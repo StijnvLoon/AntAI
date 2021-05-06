@@ -3,12 +3,15 @@ import { Grid } from "../Grid";
 import { Entity, EntityType } from "../Entity";
 import { RouteCalculator } from "../RouteCalculator";
 import { CellType } from "../Cell";
+import { GathererAnt } from "./ants/GathererAnt";
+import { AntFactory } from "../AntFactory";
 
 export class Colony extends Entity {
 
     public ants: Ant[]
     public foodAmount: number = 0
     private routeCalculator: RouteCalculator
+    private antFactory: AntFactory = new AntFactory()
 
     constructor(
         public grid: Grid
@@ -18,27 +21,44 @@ export class Colony extends Entity {
         this.routeCalculator = new RouteCalculator(grid.cellsMap)
     }
 
-    createAnt() {
-        const newAnt: Ant = new Ant(
+    createGathererAnt() {
+        const newAnt = this.antFactory.createGathererAnt(
             this.grid.getRandomEmptyCell(),
-            0,
+            this.currentCell,
             this.currentCell,
             () => {
-                if (newAnt.foodAmount == newAnt.maxFoodAmount) {
-                    return this.currentCell
-                } else {
-                    return this.grid.getNearestCellByType(newAnt, CellType.FOOD)
-                }
-            })
-        newAnt.listener = {
-            onKilled: () => {
+                return this.grid.getNearestCellByType(newAnt.currentCell, CellType.FOOD)
+            },
+            () => {
                 const index: number = this.ants.indexOf(newAnt)
 
                 delete newAnt.currentCell.entity
                 delete this.ants[index]
                 this.ants.splice(index, 1)
             }
-        }
+        )
+
+        this.ants.push(newAnt)
+    }
+
+    createSoldierAnt() {
+        const newAnt = this.antFactory.createSoldierAnt(
+            this.grid.getRandomEmptyCell(),
+            this.currentCell,
+            this.currentCell,
+            () => {
+                const test = this.grid.getNearestCellByEntity(newAnt.currentCell, EntityType.ENEMY)
+                return test
+            },
+            () => {
+                const index: number = this.ants.indexOf(newAnt)
+
+                delete newAnt.currentCell.entity
+                delete this.ants[index]
+                this.ants.splice(index, 1)
+            }
+        )
+
         this.ants.push(newAnt)
     }
 
@@ -46,11 +66,7 @@ export class Colony extends Entity {
         //update ants
         this.ants.forEach((ant) => {
             if (ant.onTarget()) {
-                var nextTarget = ant.getNextTarget()
-                ant.setNewRoute(this.routeCalculator.calculateAstar(
-                    ant.currentCell,
-                    nextTarget ? nextTarget : ant.noTargetCell
-                ))
+                ant.setNewRoute(this.routeCalculator.calculateAstar(ant.currentCell, ant.getNextTarget()))
             }
             ant.progressRoute()
         })

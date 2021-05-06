@@ -3,8 +3,6 @@
         {{cell.foodAmount}}
     </div>
     <div class="entity" [ngStyle]="getEntityStyle()">
-        <!-- <div class="food" *ngIf="cell.entity">
-            {{cell.entity.type == 0 ? cell.entity.foodAmount : ''}}
-        </div> -->
+        <div class="ant" [ngStyle]="getAntStyle()"></div>
     </div>
 </div>

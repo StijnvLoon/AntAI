@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   width: number = 45
   height: number = 20
-  enemyPercent: number = 0
+  enemyPercent: number = 2
   foodPercent: number = 10
   blockadePercent: number = 10
   isPlaying: boolean = false
@@ -51,10 +51,6 @@ export class AppComponent implements OnInit {
 
   makeTurn() {
     this.colony.turn()
-  }
-
-  addAnt() {
-    this.colony.createAnt()
   }
 
   createNewColony() {
