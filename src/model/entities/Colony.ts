@@ -22,6 +22,7 @@ export class Colony extends Entity {
         const newAnt: Ant = new Ant(
             this.grid.getRandomEmptyCell(),
             0,
+            this.currentCell,
             () => {
                 if (newAnt.foodAmount == newAnt.maxFoodAmount) {
                     return this.currentCell
@@ -45,7 +46,11 @@ export class Colony extends Entity {
         //update ants
         this.ants.forEach((ant) => {
             if (ant.onTarget()) {
-                ant.setNewRoute(this.routeCalculator.calculateAstar(ant.currentCell, ant.getNextTarget()))
+                var nextTarget = ant.getNextTarget()
+                ant.setNewRoute(this.routeCalculator.calculateAstar(
+                    ant.currentCell,
+                    nextTarget ? nextTarget : ant.noTargetCell
+                ))
             }
             ant.progressRoute()
         })
