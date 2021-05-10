@@ -32,7 +32,6 @@ export class Colony extends Entity {
             () => {
                 const index: number = this.ants.indexOf(newAnt)
 
-                delete newAnt.currentCell.entity
                 delete this.ants[index]
                 this.ants.splice(index, 1)
             }
@@ -47,13 +46,11 @@ export class Colony extends Entity {
             this.currentCell,
             this.currentCell,
             () => {
-                const test = this.grid.getNearestCellByEntity(newAnt.currentCell, EntityType.ENEMY)
-                return test
+                return this.grid.getNearestCellByEntity(newAnt.currentCell, EntityType.ENEMY)
             },
             () => {
                 const index: number = this.ants.indexOf(newAnt)
 
-                delete newAnt.currentCell.entity
                 delete this.ants[index]
                 this.ants.splice(index, 1)
             }
@@ -69,6 +66,7 @@ export class Colony extends Entity {
                 ant.setNewRoute(this.routeCalculator.calculateAstar(ant.currentCell, ant.getNextTarget()))
             }
             ant.progressRoute()
+            ant.increaseAge()
         })
 
         //notify cells

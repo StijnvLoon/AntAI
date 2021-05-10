@@ -15,6 +15,8 @@ export class Entity {
     }
 
     kill() {
+        delete this.currentCell.entity
+
         if(this.listener) {
             this.listener.onKilled()
         }
