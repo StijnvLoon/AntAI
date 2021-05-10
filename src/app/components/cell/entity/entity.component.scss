@@ -1,0 +1,20 @@
+.entity {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.entity_ant {
+    background-color: black;
+}
+
+.entity_enemy {
+    background-color: rgb(226, 85, 85);
+}
+
+.entity_colony {
+    background-color: rgb(255, 208, 0);
+}

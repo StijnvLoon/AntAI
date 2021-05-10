@@ -14,13 +14,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CellDialog } from './dialogs/cellDialog/Cell.dialog';
+import { EntityComponent } from './components/cell/entity/entity.component';
+import { AntComponent } from './components/cell/entity/ant/ant.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GridComponent,
     CellComponent,
-    CellDialog
+    CellDialog,
+    EntityComponent,
+    AntComponent
   ],
   imports: [
     BrowserModule,

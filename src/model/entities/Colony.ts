@@ -3,7 +3,6 @@ import { Grid } from "../Grid";
 import { Entity, EntityType } from "../Entity";
 import { RouteCalculator } from "../RouteCalculator";
 import { CellType } from "../Cell";
-import { GathererAnt } from "./ants/GathererAnt";
 import { AntFactory } from "../AntFactory";
 
 export class Colony extends Entity {
@@ -29,12 +28,7 @@ export class Colony extends Entity {
             () => {
                 return this.grid.getNearestCellByType(newAnt.currentCell, CellType.FOOD)
             },
-            () => {
-                const index: number = this.ants.indexOf(newAnt)
-
-                delete this.ants[index]
-                this.ants.splice(index, 1)
-            }
+            () => { this.removeAnt(newAnt) }
         )
 
         this.ants.push(newAnt)
@@ -48,15 +42,17 @@ export class Colony extends Entity {
             () => {
                 return this.grid.getNearestCellByEntity(newAnt.currentCell, EntityType.ENEMY)
             },
-            () => {
-                const index: number = this.ants.indexOf(newAnt)
-
-                delete this.ants[index]
-                this.ants.splice(index, 1)
-            }
+            () => { this.removeAnt(newAnt) }
         )
 
         this.ants.push(newAnt)
+    }
+
+    private removeAnt(ant: Ant) {
+        const index: number = this.ants.indexOf(ant)
+
+        delete this.ants[index]
+        this.ants.splice(index, 1)
     }
 
     turn() {

@@ -22,23 +22,6 @@ export class CellComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getEntityStyle() {
-    if (this.cell.entity) {
-      switch (this.cell.entity.entityType) {
-        case EntityType.ANT:
-          return { 'background-color': 'black' }
-        case EntityType.ENEMY:
-          return { 'background-color': 'red' }
-        case EntityType.COLONY:
-          return { 'background-color': 'yellow' }
-        default:
-          return {}
-      }
-    } else {
-      return {}
-    }
-  }
-
   getCellStyle() {
     const cellcost = this.cell.costs;
     const cellbasecost = this.cell.defaultCost;
@@ -68,28 +51,8 @@ export class CellComponent implements OnInit {
         }
         break;
       }
-
     }
     return { 'background-color': background_settings }; //append background settings
-  }
-
-  getAntStyle() {
-    if (this.cell.entity) {
-      if (this.cell.entity.entityType == EntityType.ANT) {
-        const ant = this.cell.entity as Ant
-
-        switch (ant.antType) {
-          case AntType.GATHERER: {
-            return { 'background-color': 'green' }
-          }
-          case AntType.SOLDIER: {
-            return { 'background-color': 'red' }
-          }
-        }
-      }
-    } else {
-      return {}
-    }
   }
 
   editCellDialog() {
@@ -104,5 +67,4 @@ export class CellComponent implements OnInit {
       }
     })
   }
-
 }
