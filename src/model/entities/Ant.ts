@@ -39,5 +39,6 @@ export class Ant extends Entity {
 
 export enum AntType {
     GATHERER,
-    SOLDIER
+    SOLDIER,
+    CARETAKER
 }

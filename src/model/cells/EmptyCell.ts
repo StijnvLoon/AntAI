@@ -45,6 +45,15 @@ export class EmptyCell extends Cell {
                         gatherer.foodAmount = 0
                         break
                     }
+
+                    if(ant.antType == AntType.CARETAKER) {
+                        //TODO create new ant
+                        const colony: Colony = this.entity as Colony
+                        if(colony.foodAmount - 20 > 0) {
+                            colony.foodAmount -= 20
+                            colony.createGathererAnt()
+                        }
+                    }
                     break
 
                 }

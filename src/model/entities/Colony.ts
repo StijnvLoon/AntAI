@@ -48,6 +48,20 @@ export class Colony extends Entity {
         this.ants.push(newAnt)
     }
 
+    createCaretakerAnt() {
+        const newAnt = this.antFactory.createCaretakerAnt(
+            this.grid.getRandomEmptyCell(),
+            this.currentCell,
+            this.currentCell,
+            () => {
+                return this.grid.getRandomEmptyCell()
+            },
+            () => { this.removeAnt(newAnt) }
+        )
+
+        this.ants.push(newAnt)
+    }
+    
     private removeAnt(ant: Ant) {
         const index: number = this.ants.indexOf(ant)
 
