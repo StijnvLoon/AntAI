@@ -85,6 +85,24 @@ export class Colony extends Entity {
 
         this.ants.push(newAnt)
     }
+
+    calculateNeededAntType(): AntType {
+        var neededType: AntType = AntType.GATHERER
+        var sortageAmount: number = 0
+
+        this.antDistributionMap.forEach((percent: number, type: AntType) => {
+            const antAmount = this.ants.filter((ant) => ant.antType == type).length
+            const neededAntsAmount = Math.round((percent/100) * this.ants.length)
+            const sortage = neededAntsAmount - antAmount
+
+            if(sortage > sortageAmount) {
+                sortageAmount = sortage
+                neededType = type
+            }
+        })
+
+        return neededType
+    }
     
     private removeAnt(ant: Ant) {
         const index: number = this.ants.indexOf(ant)
