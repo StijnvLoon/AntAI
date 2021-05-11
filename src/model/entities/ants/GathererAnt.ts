@@ -4,7 +4,7 @@ import { Ant, AntType } from '../Ant';
 
 export class GathererAnt extends Ant {
 
-    public readonly maxFoodAmount = GlobalVars.DEFAULT_GATHERER_MAXFOODAMOUNT
+    public readonly maxFoodAmount = GlobalVars.GATHERER_MAXFOODAMOUNT
 
     constructor(
         public currentCell: Cell,

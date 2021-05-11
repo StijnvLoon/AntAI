@@ -4,7 +4,7 @@ import { Entity, EntityType } from "./Entity";
 export class Cell {
 
     public entity: Entity
-    public costs: number = GlobalVars.DEFAULT_CELL_COSTS
+    public costs: number = GlobalVars.CELL_COSTS
 
     constructor(
         public readonly y: number,
@@ -26,7 +26,7 @@ export class Cell {
     }
 
     updateCosts() {
-        if(this.costs < GlobalVars.DEFAULT_CELL_COSTS) {
+        if(this.costs < GlobalVars.CELL_COSTS) {
             this.costs += 1
         }
     }

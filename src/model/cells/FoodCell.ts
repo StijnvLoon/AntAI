@@ -8,10 +8,10 @@ import { GlobalVars } from "src/utils/GlobalVars";
 
 export class FoodCell extends Cell {
 
-    public readonly maxfoodamount: number = GlobalVars.DEFAULT_FOODCELL_MAXFOODAMOUNT
+    public readonly maxfoodamount: number = GlobalVars.FOODCELL_MAXFOODAMOUNT
     public foodAmount: number
     public turnsWithoutFood: number = 0
-    private readonly maxTurnsWithoutFood = GlobalVars.DEFAULT_FOODCELL_MAXTURNSWITHOUTFOOD
+    private readonly maxTurnsWithoutFood = GlobalVars.FOODCELL_MAXTURNSWITHOUTFOOD
 
     constructor(
         public readonly y: number,

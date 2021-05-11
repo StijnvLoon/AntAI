@@ -9,7 +9,7 @@ import { GlobalVars } from "src/utils/GlobalVars";
 export class Colony extends Entity {
 
     public ants: Ant[]
-    public foodAmount: number = GlobalVars.DEFAULT_COLONY_FOODAMOUNT
+    public foodAmount: number = GlobalVars.COLONY_START_FOODAMOUNT
     private routeCalculator: RouteCalculator
     private antFactory: AntFactory = new AntFactory()
 

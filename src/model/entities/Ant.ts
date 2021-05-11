@@ -13,7 +13,7 @@ export class Ant extends Entity {
         public currentCell: Cell,
         public noTargetCell: Cell,
         public getNextTarget: () => Cell,
-        private maxAge: number = CustomMath.randomRange(GlobalVars.DEFAULT_ANT_MAXAGE_MIN, GlobalVars.DEFAULT_ANT_MAXAGE_MAX)
+        private maxAge: number = CustomMath.randomRange(GlobalVars.ANT_MAXAGE_MIN, GlobalVars.ANT_MAXAGE_MAX)
     ) {
         super(currentCell, EntityType.ANT);
     }
