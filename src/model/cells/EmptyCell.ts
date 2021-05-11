@@ -1,3 +1,4 @@
+import { GlobalVars } from "src/utils/GlobalVars";
 import { Cell, CellType } from "../Cell";
 import { Ant, AntType } from "../entities/Ant";
 import { GathererAnt } from "../entities/ants/GathererAnt";
@@ -43,10 +44,31 @@ export class EmptyCell extends Cell {
                         const colony: Colony = this.entity as Colony
                         colony.foodAmount = colony.foodAmount + gatherer.foodAmount
                         gatherer.foodAmount = 0
-                        break
+                    }
+
+                    if(ant.antType == AntType.CARETAKER) {
+                        const colony: Colony = this.entity as Colony
+                        if(colony.foodAmount - GlobalVars.GATHERER_CREATE_ANT_FOOD_COSTS > 0) {
+                            colony.foodAmount -= GlobalVars.GATHERER_CREATE_ANT_FOOD_COSTS
+
+                            switch(colony.calculateNeededAntType()) {
+                                case AntType.GATHERER: {
+                                    colony.createGathererAnt()
+                                    break
+                                }
+                                case AntType.SOLDIER: {
+                                    colony.createSoldierAnt()
+                                    break
+                                }
+                                case AntType.CARETAKER: {
+                                    colony.createCaretakerAnt()
+                                    break
+                                }
+                            }
+                            
+                        }
                     }
                     break
-
                 }
                 case EntityType.ENEMY: {
 
@@ -64,7 +86,6 @@ export class EmptyCell extends Cell {
             this.replaceEntity(ant)
         }
     }
-
 }
 
 

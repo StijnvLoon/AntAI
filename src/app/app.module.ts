@@ -14,13 +14,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CellDialog } from './dialogs/cellDialog/Cell.dialog';
+import { EntityComponent } from './components/cell/entity/entity.component';
+import { AntComponent } from './components/cell/entity/ant/ant.component';
+import { LogsComponent } from './components/logs/logs.component';
+import { NgxChartsModule }from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
     AppComponent,
     GridComponent,
     CellComponent,
-    CellDialog
+    CellDialog,
+    EntityComponent,
+    AntComponent,
+    LogsComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +39,8 @@ import { CellDialog } from './dialogs/cellDialog/Cell.dialog';
     MatButtonModule,
     MatIconModule,
     MatRadioModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

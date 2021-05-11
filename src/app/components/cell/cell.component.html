@@ -1,10 +1,3 @@
 <div class="cell" [ngStyle]="getCellStyle()" (click)="editCellDialog()">
-    <div class="food" *ngIf="cell.type == 1">
-        {{cell.foodAmount}}
-    </div>
-    <div *ngIf="cell.type == 0">
-    </div>
-    <div class="entity" [ngStyle]="getEntityStyle()">
-        <div class="ant" [ngStyle]="getAntStyle()"></div>
-    </div>
+    <app-entity *ngIf="cell.entity" [entity]="cell.entity" style="width: 100%; height: 100%;"></app-entity>
 </div>
