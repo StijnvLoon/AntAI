@@ -36,7 +36,7 @@ export class CellComponent implements OnInit {
       }
 
       case CellType.BLOCKADE: {
-        return { 'background-color': '#b26b14' } //blockade cannot be traversed, thus cell costs do not matter
+        return { 'background-color': '#c78a42' } //blockade cannot be traversed, thus cell costs do not matter
       }
 
       case CellType.FOOD: {

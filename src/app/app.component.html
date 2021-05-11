@@ -1,18 +1,19 @@
-<div>
-    width: <input [(ngModel)]="width">
-    height: <input [(ngModel)]="height">
-    enemyPercentage: <input [(ngModel)]="enemyPercent">
-    foodPercentage: <input [(ngModel)]="foodPercent">
-    blockadePercentage: <input [(ngModel)]="blockadePercent">
-    <button (click)="createNewGrid()">Generate Grid</button>
+<div style="display: grid; grid-template-columns: repeat(6, 1fr);">
+    <div>width: <input [(ngModel)]="width"></div>
+    <div>height: <input [(ngModel)]="height"></div>
+    <div>enemyPercentage: <input [(ngModel)]="enemyPercent"></div>
+    <div>foodPercentage: <input [(ngModel)]="foodPercent"></div>
+    <div>blockadePercentage: <input [(ngModel)]="blockadePercent"></div>
+    <div><button (click)="createNewGrid()">Generate Grid</button></div>
+
+    <div>ants: <input [(ngModel)]="ants"></div>
+    <div>gatherers (%): <input [(ngModel)]="gathererPercentage"></div>
+    <div>soldiers (%): <input [(ngModel)]="soldierPercentage"></div>
+    <div>caretakers (%): <input [(ngModel)]="caretakerPercentage"></div>
+    <div></div>
+    <div><button (click)="createNewColony()">Generate Colony</button></div>
 </div>
-<div>
-    ants: <input [(ngModel)]="ants">
-    gatherers (%): <input [(ngModel)]="gathererPercentage">
-    soldiers (%): <input [(ngModel)]="soldierPercentage">
-    caretakers (%): <input [(ngModel)]="caretakerPercentage">
-    <button (click)="createNewColony()">Generate Colony</button>
-</div>
+
 <div>
     <button (click)="makeTurn()">make turn</button>
     <button (click)="colony.createGathererAnt()">Add gatherer</button>
