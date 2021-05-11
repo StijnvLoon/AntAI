@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GridComponent } from './components/grid/grid.component';
@@ -46,7 +46,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     MatRadioModule,
     ReactiveFormsModule,
     MatSidenavModule,
-    NgxChartsModule
+    NgxChartsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent],
