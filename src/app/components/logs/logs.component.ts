@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Logs } from 'src/model/log/logs';
+import { Result } from 'src/model/log/result';
 
 @Component({
   selector: 'app-logs',
@@ -9,28 +10,35 @@ import { Logs } from 'src/model/log/logs';
 export class LogsComponent implements OnInit {
 
   @Input() logs: Logs
-  chartData: Object[] = []
+
+  chartData: any[] = []
 
   constructor() { }
 
   ngOnInit(): void {
+    this.logs.listener = {
+      onResultAdded: (result: Result) => {
+        this.chartData = this.getChartData()
+      }
+    }
   }
 
   getChartData() {
-    const data: Object[] = []
     const lifetimeData: Object[] = []
 
     this.logs.results.forEach((result) => {
       lifetimeData.push({
-        "name": "test",
+        "name": this.logs.results.indexOf(result),
         "value": result.colonyLifeTime
       })
     })
 
-    data.push({
-      "name": "Lifetime",
-      "series": lifetimeData
-    })
+    const data = [
+      {
+        "name": "Lifetime",
+        "series": lifetimeData
+      }
+    ]
 
     return data
   }

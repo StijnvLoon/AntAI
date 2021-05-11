@@ -1,18 +1,10 @@
-<!-- <div style="display: flex; flex-direction: column;">
-    <span *ngFor="let result of logs.results">
-        {{result.colonyLifeTime}}
-    </span>
-</div> -->
-
 <ngx-charts-line-chart
-    [results]="getChartData()"
-    [xAxisLabel]="'Products'"
-    [legendTitle]="'Product Sale Chart'"
-    [yAxisLabel]="'Sale'"
-    [legend]="true"
-    [showXAxisLabel]="true"
-    [showYAxisLabel]="true"
-    [xAxis]="true"
-    [yAxis]="true"
-    [gradient]="true">
+    [results]="chartData"
+    legendTitle="'Lifetime'"
+    showXAxisLabel="true"
+    showYAxisLabel="true"
+    yAxisLabel="Lifetime (s)"
+    xAxisLabel="Distribution (%)"
+    xAxis="true"
+    yAxis="true">
 </ngx-charts-line-chart>
