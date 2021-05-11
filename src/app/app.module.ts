@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,9 @@ import { EntityComponent } from './components/cell/entity/entity.component';
 import { AntComponent } from './components/cell/entity/ant/ant.component';
 import { LogsComponent } from './components/logs/logs.component';
 import { NgxChartsModule }from '@swimlane/ngx-charts';
+import { SideNavComponent } from './side-nav/side-nav.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,9 @@ import { NgxChartsModule }from '@swimlane/ngx-charts';
     CellDialog,
     EntityComponent,
     AntComponent,
-    LogsComponent
+    LogsComponent,
+    SideNavComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,
@@ -40,9 +45,13 @@ import { NgxChartsModule }from '@swimlane/ngx-charts';
     MatIconModule,
     MatRadioModule,
     ReactiveFormsModule,
+    MatSidenavModule,
     NgxChartsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class AppModule { }
