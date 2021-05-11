@@ -1,5 +1,18 @@
-<div style="display: flex; flex-direction: column;">
+<!-- <div style="display: flex; flex-direction: column;">
     <span *ngFor="let result of logs.results">
         {{result.colonyLifeTime}}
     </span>
-</div>
+</div> -->
+
+<ngx-charts-line-chart
+    [results]="getChartData()"
+    [xAxisLabel]="'Products'"
+    [legendTitle]="'Product Sale Chart'"
+    [yAxisLabel]="'Sale'"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxis]="true"
+    [yAxis]="true"
+    [gradient]="true">
+</ngx-charts-line-chart>

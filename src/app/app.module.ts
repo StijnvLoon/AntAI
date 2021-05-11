@@ -17,6 +17,7 @@ import { CellDialog } from './dialogs/cellDialog/Cell.dialog';
 import { EntityComponent } from './components/cell/entity/entity.component';
 import { AntComponent } from './components/cell/entity/ant/ant.component';
 import { LogsComponent } from './components/logs/logs.component';
+import { NgxChartsModule }from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { LogsComponent } from './components/logs/logs.component';
     MatButtonModule,
     MatIconModule,
     MatRadioModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

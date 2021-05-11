@@ -78,9 +78,9 @@ export class AppComponent implements OnInit {
     this.colony = new Colony(
       this.grid,
       new Map([
-        [AntType.GATHERER, 40],
-        [AntType.SOLDIER, 20],
-        [AntType.CARETAKER, 40]
+        [AntType.GATHERER, this.gathererPercentage],
+        [AntType.SOLDIER, this.soldierPercentage],
+        [AntType.CARETAKER, this.caretakerPercentage]
       ]),
       this.ants
     )
