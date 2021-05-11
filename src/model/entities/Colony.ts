@@ -1,4 +1,4 @@
-import { Ant } from "./Ant";
+import { Ant, AntType } from "./Ant";
 import { Grid } from "../Grid";
 import { Entity, EntityType } from "../Entity";
 import { RouteCalculator } from "../RouteCalculator";
@@ -14,11 +14,34 @@ export class Colony extends Entity {
     private antFactory: AntFactory = new AntFactory()
 
     constructor(
-        public grid: Grid
+        public grid: Grid,
+        public antDistributionMap: Map<AntType, number>,
+        antAmount: number
     ) {
         super(grid.getRandomEmptyCell(), EntityType.COLONY)
-        this.ants = []
         this.routeCalculator = new RouteCalculator(grid.cellsMap)
+        this.ants = []
+
+        antDistributionMap.forEach((percent: number, type: AntType) => {
+            const amount: number = Math.round((percent / 100) * antAmount)
+
+            for(let i = 0; i < amount; i++) {
+                switch(type) {
+                    case AntType.GATHERER: {
+                        this.createGathererAnt()
+                        break
+                    }
+                    case AntType.SOLDIER: {
+                        this.createSoldierAnt()
+                        break
+                    }
+                    case AntType.CARETAKER: {
+                        this.createCaretakerAnt()
+                        break
+                    }
+                }
+            }
+        });
     }
 
     createGathererAnt() {

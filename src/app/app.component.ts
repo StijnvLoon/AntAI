@@ -2,6 +2,8 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Colony } from 'src/model/entities/Colony';
 import { Grid } from 'src/model/Grid';
 import { ColonyService } from 'src/app/services/colony.service';
+import { GlobalVars } from 'src/utils/GlobalVars';
+import { AntType } from 'src/model/entities/Ant';
 
 @Component({
   selector: 'app-root',
@@ -11,23 +13,27 @@ import { ColonyService } from 'src/app/services/colony.service';
 export class AppComponent implements OnInit {
   title = 'AntAI';
 
-  width: number = 45
-  height: number = 20
-  enemyPercent: number = 2
-  foodPercent: number = 10
-  blockadePercent: number = 10
+  width: number = GlobalVars.GRID_WIDTH
+  height: number = GlobalVars.GRID_HEIGHT
+  enemyPercent: number = GlobalVars.GRID_ENEMY_PERCENTAGE
+  foodPercent: number = GlobalVars.GRID_FOODCELL_PERCENTAGE
+  blockadePercent: number = GlobalVars.GRID_BLOCKADECELL_PERCENTAGE
   isPlaying: boolean = false
-  delay = 50
+  delay = GlobalVars.GRID_DELAY
+
+  ants: number = GlobalVars.COLONY_START_ANTAMOUNT
+  gathererPercentage: number = 40
+  soldierPercentage: number = 20
+  caretakerPercentage: number = 40
 
   colony: Colony
+  grid: Grid
   timer: number = 0
 
-  constructor(private colonyService: ColonyService) {
-
-  }
+  constructor(private colonyService: ColonyService) { }
 
   ngOnInit() {
-    this.createNewColony()
+    this.createNewGrid()
   }
 
   togglePlaying() {
@@ -53,16 +59,28 @@ export class AppComponent implements OnInit {
     this.colony.turn()
   }
 
+  createNewGrid() {
+    this.timer = 0
+    this.grid = new Grid(
+      this.width,
+      this.height,
+      this.foodPercent,
+      this.enemyPercent,
+      this.blockadePercent
+    )
+  }
+
   createNewColony() {
     this.timer = 0
+    this.grid.clearEntities()
     this.colony = new Colony(
-      new Grid(
-        this.width,
-        this.height,
-        this.foodPercent,
-        this.enemyPercent,
-        this.blockadePercent
-      )
+      this.grid,
+      new Map([
+        [AntType.GATHERER, 40],
+        [AntType.SOLDIER, 20],
+        [AntType.CARETAKER, 40]
+      ]),
+      this.ants
     )
     this.colonyService.colony = this.colony
   }

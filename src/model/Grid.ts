@@ -139,6 +139,14 @@ export class Grid {
         return this.sortCellsByDistanceToCell(cell, cells)[0]
     }
 
+    public clearEntities() {
+        Array.from(this.cellsMap.values()).forEach((cell) => {
+            if(cell.entity && cell.entity.entityType !== EntityType.ENEMY) {
+                cell.entity.kill()
+            }
+        })
+    }
+
     private sortCellsByDistanceToCell(targetCell: Cell, cells: Cell[]): Cell[] {
         return cells.sort((a, b) => {
             const ayDiff = Math.abs(targetCell.y - a.y)     //5

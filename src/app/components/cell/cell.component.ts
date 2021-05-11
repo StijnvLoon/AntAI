@@ -7,6 +7,7 @@ import { CustomMath } from 'src/utils/CustomMath';
 import { VerboseMode } from 'src/utils/VerboseMode';
 import { CellDialog } from 'src/app/dialogs/cellDialog/Cell.dialog';
 import { Ant, AntType } from 'src/model/entities/Ant';
+import { GlobalVars } from 'src/utils/GlobalVars';
 
 @Component({
   selector: 'app-cell',
@@ -23,19 +24,15 @@ export class CellComponent implements OnInit {
   }
 
   getCellStyle() {
-    const cellcost = this.cell.costs;
-    const cellbasecost = this.cell.defaultCost;
     var background_settings = "";
 
     switch (this.cell.type) {
       case CellType.EMPTY: {
         //calculate the darkness of a cell based on the cell cost.
-        if (this.cell.costs !== undefined) { //error handling
-          var cellcost_percentage = (cellcost / cellbasecost) * 100; //get relative cost percentage 
-          var calculated_darkness = CustomMath.clamp(cellcost_percentage, 1, 100); //calculate darkness of cell/tile
-          background_settings = `hsl(200, 20%, ${calculated_darkness}%)` //store colouring in background setting 
-          break;
-        }
+        var cellcost_percentage = (this.cell.costs / GlobalVars.CELL_COSTS) * 100; //get relative cost percentage 
+        var calculated_darkness = CustomMath.clamp(cellcost_percentage, 1, 100); //calculate darkness of cell/tile
+        background_settings = `hsl(200, 20%, ${calculated_darkness}%)` //store colouring in background setting 
+        break;
       }
 
       case CellType.BLOCKADE: {
