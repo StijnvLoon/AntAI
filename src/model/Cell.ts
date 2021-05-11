@@ -1,10 +1,10 @@
+import { GlobalVars } from "src/utils/GlobalVars";
 import { Entity, EntityType } from "./Entity";
 
 export class Cell {
 
     public entity: Entity
-    public readonly defaultCost = 50
-    public costs: number = this.defaultCost
+    public costs: number = GlobalVars.DEFAULT_CELL_COSTS
 
     constructor(
         public readonly y: number,
@@ -26,7 +26,7 @@ export class Cell {
     }
 
     updateCosts() {
-        if(this.costs < this.defaultCost) {
+        if(this.costs < GlobalVars.DEFAULT_CELL_COSTS) {
             this.costs += 1
         }
     }

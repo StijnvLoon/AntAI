@@ -4,11 +4,12 @@ import { Entity, EntityType } from "../Entity";
 import { RouteCalculator } from "../RouteCalculator";
 import { CellType } from "../Cell";
 import { AntFactory } from "../AntFactory";
+import { GlobalVars } from "src/utils/GlobalVars";
 
 export class Colony extends Entity {
 
     public ants: Ant[]
-    public foodAmount: number = 0
+    public foodAmount: number = GlobalVars.DEFAULT_COLONY_FOODAMOUNT
     private routeCalculator: RouteCalculator
     private antFactory: AntFactory = new AntFactory()
 

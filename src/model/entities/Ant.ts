@@ -1,4 +1,5 @@
 import { CustomMath } from "src/utils/CustomMath";
+import { GlobalVars } from "src/utils/GlobalVars";
 import { Cell } from "../Cell";
 import { Entity, EntityType } from "../Entity";
 
@@ -12,7 +13,7 @@ export class Ant extends Entity {
         public currentCell: Cell,
         public noTargetCell: Cell,
         public getNextTarget: () => Cell,
-        private maxAge: number = CustomMath.randomRange(80, 120)
+        private maxAge: number = CustomMath.randomRange(GlobalVars.DEFAULT_ANT_MAXAGE_MIN, GlobalVars.DEFAULT_ANT_MAXAGE_MAX)
     ) {
         super(currentCell, EntityType.ANT);
     }

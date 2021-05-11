@@ -4,13 +4,14 @@ import { VerboseMode } from "../../utils/VerboseMode";
 import { Ant, AntType } from "../entities/Ant";
 import { Entity, EntityType } from "../Entity";
 import { GathererAnt } from "../entities/ants/GathererAnt";
+import { GlobalVars } from "src/utils/GlobalVars";
 
 export class FoodCell extends Cell {
 
-    public readonly maxfoodamount: number = 10
+    public readonly maxfoodamount: number = GlobalVars.DEFAULT_FOODCELL_MAXFOODAMOUNT
     public foodAmount: number
     public turnsWithoutFood: number = 0
-    private readonly maxTurnsWithoutFood = 100
+    private readonly maxTurnsWithoutFood = GlobalVars.DEFAULT_FOODCELL_MAXTURNSWITHOUTFOOD
 
     constructor(
         public readonly y: number,
@@ -52,7 +53,7 @@ export class FoodCell extends Cell {
     }
 
     public addTurnWithoutFood() {
-        this.turnsWithoutFood = this.turnsWithoutFood + 1
+        this.turnsWithoutFood += 1
         if (this.turnsWithoutFood == this.maxTurnsWithoutFood) {
             this.refillFood(CustomMath.randomRange(1, this.maxfoodamount))
         }
