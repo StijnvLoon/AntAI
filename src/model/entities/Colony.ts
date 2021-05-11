@@ -112,6 +112,11 @@ export class Colony extends Entity {
     }
 
     turn() {
+        //check if there are any ants
+        if(this.ants.length == 0) {
+            this.kill()
+        }
+
         //update ants
         this.ants.forEach((ant) => {
             if (ant.onTarget()) {

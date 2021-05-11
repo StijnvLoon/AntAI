@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CellDialog } from './dialogs/cellDialog/Cell.dialog';
 import { EntityComponent } from './components/cell/entity/entity.component';
 import { AntComponent } from './components/cell/entity/ant/ant.component';
+import { LogsComponent } from './components/logs/logs.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AntComponent } from './components/cell/entity/ant/ant.component';
     CellComponent,
     CellDialog,
     EntityComponent,
-    AntComponent
+    AntComponent,
+    LogsComponent
   ],
   imports: [
     BrowserModule,

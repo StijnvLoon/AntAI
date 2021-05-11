@@ -4,6 +4,7 @@ import { Grid } from 'src/model/Grid';
 import { ColonyService } from 'src/app/services/colony.service';
 import { GlobalVars } from 'src/utils/GlobalVars';
 import { AntType } from 'src/model/entities/Ant';
+import { Logs } from 'src/model/log/logs';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
   colony: Colony
   grid: Grid
   timer: number = 0
+  logs: Logs = new Logs()
 
   constructor(private colonyService: ColonyService) { }
 
@@ -82,6 +84,14 @@ export class AppComponent implements OnInit {
       ]),
       this.ants
     )
+    this.colony.listener = {
+      onKilled: () => {
+        this.logs.addResult(this.colony, this.timer)
+        // this.colony = undefined
+        this.createNewColony()
+      }
+    }
+
     this.colonyService.colony = this.colony
   }
 }
