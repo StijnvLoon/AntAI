@@ -26,6 +26,13 @@
             <!-- <app-logs [logs]="logs" *ngIf="logs"></app-logs> -->
             <!--TODO: CLEANUP-->
             </li>
-        <pagination-controls id="info_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event"></pagination-controls>
+
+            <style>
+                .paginate /deep/ .ngx-pagination {
+                  margin-left: -100px;
+                }
+              </style>
+
+        <pagination-controls class="paginate" responsive="true" autoHide="true" id="info_pagination" maxSize="7" directionLinks="true" (pageChange)="page = $event"></pagination-controls>
     </ul>
 </div>
