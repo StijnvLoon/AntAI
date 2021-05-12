@@ -15,6 +15,7 @@
         currentPage: page,
         totalItems: totalRecords }">
             <h2>{{item.title}}</h2>
+            <img src='../../assets/images/{{item.img}}' class="img" onerror="this.style.display='none'">
             <p>{{item.p1}}</p>
             <br>
             <h2>{{item.title2}}</h2>
@@ -22,6 +23,7 @@
             <br>
             <h2>{{item.title3}}</h2>
             <p>{{item.p3}}</p>
+            
 
             <!-- <app-logs [logs]="logs" *ngIf="logs"></app-logs> -->
             <!--TODO: CLEANUP-->
@@ -30,6 +32,7 @@
             <style>
                 .paginate /deep/ .ngx-pagination {
                   margin-left: -100px;
+                  color: white;
                 }
               </style>
 
