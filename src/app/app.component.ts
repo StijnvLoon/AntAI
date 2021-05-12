@@ -5,6 +5,7 @@ import { ColonyService } from 'src/app/services/colony.service';
 import { GlobalVars } from 'src/utils/GlobalVars';
 import { AntType } from 'src/model/entities/Ant';
 import { Logs } from 'src/model/log/logs';
+import { AntDistributionChooserAI } from 'src/model/AntDistributionChooserAI'
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
   grid: Grid
   timer: number = 0
   logs: Logs = new Logs()
+  distributionAI: AntDistributionChooserAI = new AntDistributionChooserAI(this.logs.results)
 
   constructor(private colonyService: ColonyService) { }
 
@@ -72,12 +74,12 @@ export class AppComponent implements OnInit {
     )
   }
 
-  createNewColony() {
+  createNewColony(antDistribution?: Map<AntType, number>) {
     this.timer = 0
     this.grid.clearEntities()
     this.colony = new Colony(
       this.grid,
-      new Map([
+      antDistribution ? antDistribution : new Map([
         [AntType.GATHERER, this.gathererPercentage],
         [AntType.SOLDIER, this.soldierPercentage],
         [AntType.CARETAKER, this.caretakerPercentage]
@@ -88,7 +90,10 @@ export class AppComponent implements OnInit {
       onKilled: () => {
         this.logs.addResult(this.colony, this.timer)
         // this.colony = undefined
-        this.createNewColony()
+        this.distributionAI.getPredictedDistribution()
+
+                  // this.createNewColony(result)
+
       }
     }
 
