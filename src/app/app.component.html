@@ -1,38 +1,40 @@
 <mat-sidenav-container>
     <mat-sidenav #sideNav mode="side">
         <app-side-nav [logs]="logs"></app-side-nav>
-        
+
     </mat-sidenav>
     <mat-sidenav-content>
         <app-toolbar [inputSideNav]="sideNav"></app-toolbar>
         <br><br>
-        <div style="display: grid; grid-template-columns: repeat(6, 1fr);">
-            <div>width: <input [(ngModel)]="width"></div>
-            <div>height: <input [(ngModel)]="height"></div>
-            <div>enemyPercentage: <input [(ngModel)]="enemyPercent"></div>
-            <div>foodPercentage: <input [(ngModel)]="foodPercent"></div>
-            <div>blockadePercentage: <input [(ngModel)]="blockadePercent"></div>
-            <div><button (click)="createNewGrid()">Generate Grid</button></div>
-        
-            <div>ants: <input [(ngModel)]="ants"></div>
-            <div>gatherers (%): <input [(ngModel)]="gathererPercentage"></div>
-            <div>soldiers (%): <input [(ngModel)]="soldierPercentage"></div>
-            <div>caretakers (%): <input [(ngModel)]="caretakerPercentage"></div>
-            <div></div>
-            <div><button (click)="createNewColony()">Generate Colony</button></div>
-        </div>
-        
-        <div>
-            <button (click)="makeTurn()">make turn</button>
-            <button (click)="colony.createGathererAnt()">Add gatherer</button>
-            <button (click)="colony.createSoldierAnt()">Add soldier</button>
-            <button (click)="colony.createCaretakerAnt()">Add caretaker</button>
-            delay: <input [(ngModel)]="delay">
-            <button (click)="togglePlaying()">{{isPlaying ? 'Pause' : 'Play'}}</button>
-            <div style="display: flex; flex-direction: row;" *ngIf="colony">
-                <div>timer: {{timer}}s</div>
-                <div style="margin-left: 10px;">ants: {{colony.ants.length}}</div>
-                <div style="margin-left: 10px;">food: {{colony.foodAmount}}</div>
+        <div class="menustyle">
+            <div class="menustyle" style="display: grid; grid-template-columns: repeat(6, 1fr);">
+                <div>width: <input [(ngModel)]="width"></div>
+                <div>height: <input [(ngModel)]="height"></div>
+                <div>enemyPercentage: <input [(ngModel)]="enemyPercent"></div>
+                <div>foodPercentage: <input [(ngModel)]="foodPercent"></div>
+                <div>blockadePercentage: <input [(ngModel)]="blockadePercent"></div>
+                <div><button (click)="createNewGrid()">Generate Grid</button></div>
+
+                <div>ants: <input [(ngModel)]="ants"></div>
+                <div>gatherers (%): <input class="percentage" [(ngModel)]="gathererPercentage"></div>
+                <div>soldiers (%): <input class="percentage" [(ngModel)]="soldierPercentage"></div>
+                <div>caretakers (%): <input class="percentage" [(ngModel)]="caretakerPercentage"></div>
+                <div></div>
+                <div><button (click)="createNewColony()">Generate Colony</button></div>
+            </div>
+
+            <div>
+                <button (click)="makeTurn()">make turn</button>
+                <button (click)="colony.createGathererAnt()">Add gatherer</button>
+                <button (click)="colony.createSoldierAnt()">Add soldier</button>
+                <button (click)="colony.createCaretakerAnt()">Add caretaker</button>
+                delay: <input [(ngModel)]="delay">
+                <button (click)="togglePlaying()">{{isPlaying ? 'Pause' : 'Play'}}</button>
+                <div style="display: flex; flex-direction: row;" *ngIf="colony">
+                    <div>timer: {{timer}}s</div>
+                    <div style="margin-left: 10px;">ants: {{colony.ants.length}}</div>
+                    <div style="margin-left: 10px;">food: {{colony.foodAmount}}</div>
+                </div>
             </div>
         </div>
         <app-grid [grid]="grid" *ngIf="grid"></app-grid>
@@ -42,4 +44,3 @@
 
     </mat-sidenav-content>
 </mat-sidenav-container>
-
