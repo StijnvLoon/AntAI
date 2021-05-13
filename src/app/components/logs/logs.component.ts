@@ -49,7 +49,6 @@ export class LogsComponent implements OnInit {
     antDistribution.forEach((percent: number, type: AntType) => {
       string += percent + '%, '
     })
-
     return string
   }
 

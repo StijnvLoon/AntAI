@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Colony } from 'src/model/entities/Colony';
 import { Grid } from 'src/model/Grid';
 import { ColonyService } from 'src/app/services/colony.service';
 import { GlobalVars } from 'src/utils/GlobalVars';
-import { AntType } from 'src/model/entities/Ant';
 import { Logs } from 'src/model/log/logs';
 import { AntDistributionChooserAI } from 'src/model/AntDistributionChooserAI'
 
@@ -43,6 +42,9 @@ export class AppComponent implements OnInit {
   togglePlaying() {
     this.isPlaying = !this.isPlaying
     if (this.isPlaying) {
+      if(!this.colony) {
+        this.createNewColony()
+      }
       this.loop()
     }
   }
@@ -74,26 +76,24 @@ export class AppComponent implements OnInit {
     )
   }
 
-  createNewColony(antDistribution?: Map<AntType, number>) {
+  createNewColony() {
     this.timer = 0
     this.grid.clearEntities()
+    const antDistribution = this.distributionAI.getPredictedDistribution((bestDistribution) => {
+      console.log('best result:')
+      console.log(bestDistribution)
+      alert('gevonden!')
+    })
+
     this.colony = new Colony(
       this.grid,
-      antDistribution ? antDistribution : new Map([
-        [AntType.GATHERER, this.gathererPercentage],
-        [AntType.SOLDIER, this.soldierPercentage],
-        [AntType.CARETAKER, this.caretakerPercentage]
-      ]),
+      antDistribution,
       this.ants
     )
     this.colony.listener = {
       onKilled: () => {
         this.logs.addResult(this.colony, this.timer)
-        // this.colony = undefined
-        this.distributionAI.getPredictedDistribution()
-
-                  // this.createNewColony(result)
-
+        this.createNewColony()
       }
     }
 

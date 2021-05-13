@@ -1,117 +1,178 @@
 import { CustomMath } from 'src/utils/CustomMath'
 import { AntType } from './entities/Ant'
 import { Result } from './log/result'
-import * as tf from '@tensorflow/tfjs';
+import { _isNumberValue } from '@angular/cdk/coercion';
+import { GlobalVars } from 'src/utils/GlobalVars';
 
 export class AntDistributionChooserAI {
 
-    constructor(private results: Result[]) { }
+    private readonly antTypes: AntType[] = Object.values(AntType).filter((type) => {
+        return !isNaN(Number(type))
+    }) as AntType[]
 
-    async getPredictedDistribution() {
+    private progress: Progress
 
-        //todo
-        //make prediction from available data
+    constructor(private results: Result[]) {
+        this.progress = new Progress()
+        this.progress.currentType = this.antTypes[0]
+    }
 
-        // const model = tf.sequential()
-        // const inputData = this.getInputData(this.results)
+    getPredictedDistribution(finished: (distribution) => void): Map<AntType, number> {
 
-        // model.add(tf.layers.dense({ inputShape: [4], units: inputData.length + 1 }))
-        // model.add(tf.layers.dense({ units: 4 }));
-        // model.compile({ loss: 'categoricalCrossentropy', optimizer: 'sgd' });
+        var distributionPrediction;
+        this.progress.checkBestResult(this.results[this.results.length - 1])
 
-        // const test = tf.tensor4d([inputData, [4]])
-        // const result = model.predict(test)
-        // console.log(result.toString())
-
-        const model = tf.sequential()
-
-        const yData = this.getYData(this.results)
-        const xData = this.getXData(this.results)
-
-        const ys = tf.tensor2d(yData, [yData.length, yData[0].length]).div(tf.scalar(10));
-        const xs = tf.tensor2d(xData, [xData.length, 1]).reshape([xData.length, 1]).div(tf.scalar(10));
-
-        model.add(tf.layers.dense({ units: 100, inputShape: [50] }));
-        model.add(tf.layers.reshape({ targetShape: [10, 10] }));
-
-        let lstm_cells = [];
-        for (let index = 0; index < 4; index++) {
-            lstm_cells.push(tf.layers.lstmCell({ units: 20 }));
+        switch (this.progress.phase) {
+            case ProgressPhase.INITIAL: {
+                //eerste fase elk type ant 100% naar 0% uitvoeren
+                distributionPrediction = this.getInitialDistribution()
+                break
+            }
+            case ProgressPhase.EXPERTISE: {
+                distributionPrediction = this.getExpertisedDistribution()
+                break
+            }
+            case ProgressPhase.FINALISE: {
+                finished(this.progress.bestResult.antDistribution)
+                break
+            }
+            default: {
+                return this.getRandomDistribution()
+            }
         }
 
-        model.add(tf.layers.rnn({
-            cell: lstm_cells,
-            inputShape: [10, 10],
-            returnSequences: false
-        }));
-
-        model.add(tf.layers.dense({ units: 1, inputShape: [20] }));
-
-        // tf.train.adam(10)
-        model.compile({
-            optimizer: 'sgd',
-            loss: 'meanSquaredError'
-        });
-
-        const hist = model.fit(xs, ys, {
-                "batchSize": 4,
-                "epochs": 3,
-            }).then(() => {
-                console.log(hist)
-            });
-
-
-
-        return { model: model, stats: hist };
-
-
-        // const calc1 = CustomMath.randomRange(1, 100)
-        // const calc2 = CustomMath.randomRange(1, 100 - calc1)
-        // const calc3 = 100 - calc1 - calc2
-
-        // return new Map([
-        //     [AntType.GATHERER, calc1],
-        //     [AntType.SOLDIER, calc2],
-        //     [AntType.CARETAKER, calc3]
-        // ])
+        const finalDistribution: Map<AntType, number> = new Map([...distributionPrediction.entries()].sort())
+        return finalDistribution
     }
 
-    private getInputData(results: Result[]) {
-        const data: any[] = []
+    private getRandomDistribution(): Map<AntType, number> {
+        const calc1 = CustomMath.randomRange(1, 100)
+        const calc2 = CustomMath.randomRange(1, 100 - calc1)
+        const calc3 = 100 - calc1 - calc2
 
-        results.forEach((result) => {
-            data.push({
-                "gatherers": result.antDistribution.get(AntType.GATHERER),
-                "soldiers": result.antDistribution.get(AntType.SOLDIER),
-                "caretakers": result.antDistribution.get(AntType.CARETAKER),
-                "lifetime": result.colonyLifeTime,
-            })
+        return new Map([
+            [AntType.GATHERER, calc1],
+            [AntType.SOLDIER, calc2],
+            [AntType.CARETAKER, calc3]
+        ])
+    }
+
+    private getInitialDistribution(): Map<AntType, number> {
+        //de eerstvolgende 100 - 80 - 60 - 40 - 20 - 0
+        const nextPercentage = 80 - (GlobalVars.DISTRIBUTION_AI_STEP_SIZE * this.progress.typeSteps)
+        const map = new Map([
+            [this.progress.currentType, nextPercentage]
+        ])
+
+        //de rest opvullen met overgebleven waarde (100 - nextpercentage)
+        this.antTypes.forEach((type) => {
+            if (type !== this.progress.currentType) {
+                const take = (100 - nextPercentage) / (this.antTypes.length - 1)
+                map.set(type, take)
+            }
         })
 
-        return data
+        //progress updaten
+        this.progress.typeSteps += 1
+        if (nextPercentage == 0) {
+            //volgende type in de anttypes
+            const nextType: AntType = this.antTypes[this.antTypes.indexOf(this.progress.currentType) + 1]
+            if (nextType) {
+                this.progress.nextType(nextType)
+            } else {
+                this.progress.nextPhase()
+            }
+        }
+
+        return map
     }
 
-    private getYData(results: Result[]): any[] {
-        const data: any[] = []
+    private getExpertisedDistribution(): Map<AntType, number> {
 
-        results.forEach((result) => {
-            data.push([
-                result.antDistribution.get(AntType.GATHERER),
-                result.antDistribution.get(AntType.SOLDIER),
-                result.antDistribution.get(AntType.CARETAKER)
-            ])
+        const bestDistribution = this.progress.bestResult.antDistribution
+        var adjustment = (GlobalVars.DISTRIBUTION_AI_STEP_SIZE / 4) * this.progress.expertiseSteps
+
+        if (!this.progress.expertisePositive) {
+            adjustment = adjustment * -1
+        }
+
+        const map = new Map([
+            [this.progress.expertiseType, bestDistribution.get(this.progress.expertiseType) + adjustment]
+        ])
+
+        this.antTypes.forEach((type) => {
+            if (type !== this.progress.expertiseType) {
+
+                const adjustmentMinor = (-adjustment) / (this.antTypes.length - 1)
+                map.set(type, bestDistribution.get(type) + adjustmentMinor)
+            }
         })
 
-        return data
+        this.progress.expertiseSteps += 1
+
+        if(this.progress.expertisePositive) {
+            if(adjustment >= GlobalVars.DISTRIBUTION_AI_STEP_SIZE) {
+                this.progress.expertisePositive = false
+                this.progress.expertiseSteps = 1
+            }
+        } else {
+            if(-adjustment >= GlobalVars.DISTRIBUTION_AI_STEP_SIZE) {
+                this.progress.nextPhase()
+            }
+        }
+
+        return map
+    }
+}
+
+export class Progress {
+
+    public phase: ProgressPhase = ProgressPhase.INITIAL
+    public typeSteps: number = 0
+    public currentType: AntType
+
+    public bestResult: Result
+    public expertiseSteps: number = 1
+    public expertiseType: AntType
+    public expertisePositive: boolean = true
+
+    checkBestResult(result: Result) {
+        if (this.bestResult == undefined) {
+            this.setBestResult(result)
+        } else {
+            if (result.colonyLifeTime > this.bestResult.colonyLifeTime) {
+                this.setBestResult(result)
+            }
+        }
     }
 
-    private getXData(results: Result[]): any[] {
-        const data: any[] = []
-
-        results.forEach((result) => {
-            data.push(result.colonyLifeTime)
-        })
-
-        return data
+    private setBestResult(result: Result) {
+        this.bestResult = result
+        this.expertiseType = AntType[AntType[this.currentType]]
+        this.expertiseSteps = 1
+        this.expertisePositive = true
     }
+
+    nextType(type: AntType) {
+        this.currentType = type
+        this.typeSteps = 0
+    }
+
+    nextPhase() {
+        switch (this.phase) {
+            case ProgressPhase.INITIAL: {
+                this.phase = ProgressPhase.EXPERTISE
+                break
+            }
+            case ProgressPhase.EXPERTISE: {
+                this.phase = ProgressPhase.FINALISE
+            }
+        }
+    }
+}
+
+export enum ProgressPhase {
+    INITIAL,
+    EXPERTISE,
+    FINALISE
 }

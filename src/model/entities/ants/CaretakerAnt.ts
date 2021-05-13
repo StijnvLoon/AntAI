@@ -13,6 +13,6 @@ export class CaretakerAnt extends Ant {
         public noTargetCell: Cell,
         public getNextTarget: () => Cell,
     ) {
-        super(AntType.CARETAKER, currentCell, noTargetCell, getNextTarget, CustomMath.randomRange(180, 220));
+        super(AntType.CARETAKER, currentCell, noTargetCell, getNextTarget);
     }
 }
