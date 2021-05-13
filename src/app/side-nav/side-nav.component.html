@@ -1,0 +1,41 @@
+<div class="sidenav">
+    <div class="logo">
+        <a href="/" class="simple-text logo-mini">
+            <div class="logo-img">
+                <img src="todo:logoafbeeldinghier>eenmierofzo" />
+            </div>
+        </a>
+        <a href="/" class="simple-text logo-normal bold-text">
+            Documentation
+        </a>
+    </div>
+    <ul class="nav docs">
+        <li class="dataset" *ngFor="let item of data | paginate : { id : 'info_pagination',
+        itemsPerPage: 1,
+        currentPage: page,
+        totalItems: totalRecords }">
+            <h2>{{item.title}}</h2>
+            <img src='../../assets/images/{{item.img}}' class="img" onerror="this.style.display='none'">
+            <p>{{item.p1}}</p>
+            <br>
+            <h2>{{item.title2}}</h2>
+            <p>{{item.p2}}</p>
+            <br>
+            <h2>{{item.title3}}</h2>
+            <p>{{item.p3}}</p>
+            
+
+            <!-- <app-logs [logs]="logs" *ngIf="logs"></app-logs> -->
+            <!--TODO: CLEANUP-->
+            </li>
+
+            <style>
+                .paginate /deep/ .ngx-pagination {
+                  margin-left: -100px;
+                  color: white;
+                }
+              </style>
+
+        <pagination-controls class="paginate" responsive="true" autoHide="true" id="info_pagination" maxSize="7" directionLinks="true" (pageChange)="page = $event"></pagination-controls>
+    </ul>
+</div>

@@ -1,3 +1,68 @@
+@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css';
 input {
     width: 50px;
+}
+
+:root {
+    font-weight: 300;
+    font-family: 'Lucida Sans';
+}
+
+.menustyle {
+    margin-top: -70px;
+    margin-left: 60px;
+    font-weight: 300;
+    font-family: 'Lucida Sans';
+}
+
+.menustyle input {
+    padding:2px;
+    margin:2px 0;
+    border:0;
+    box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+    font-family:inherit;
+    font-size: inherit;
+    background-color: #f1f1f1;
+    color: black;
+    font-size: 16px;
+    
+}
+
+.menustyle div {
+    color: black;
+    font-size: 16px;
+}
+
+.menustyle .percentage {
+    background: #f1f1f1;
+}
+
+.menustyle button {
+    // background-color: rgb(253, 121, 165);
+    // border: 4px;
+    // color: white;
+    display:inline-block;
+    padding:0.35em 1.2em;
+    border:0.1em solid #FFFFFF;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:#7a6b6b;
+    text-align:center;
+    transition: all 0.2s;
+}
+
+.menustyle button:hover{
+    color:#000000;
+    background-color:rgb(253, 121, 165);
+    }
+
+    @media all and (max-width:30em){
+    .menustyle button{
+    display:block;
+    margin:0.4em auto;
+    }
 }

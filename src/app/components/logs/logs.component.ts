@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AntType } from 'src/model/entities/Ant';
 import { Logs } from 'src/model/log/logs';
 import { Result } from 'src/model/log/result';
 
@@ -28,7 +29,7 @@ export class LogsComponent implements OnInit {
 
     this.logs.results.forEach((result) => {
       lifetimeData.push({
-        "name": this.logs.results.indexOf(result),
+        "name": this.getDistributionName(result.antDistribution),
         "value": result.colonyLifeTime
       })
     })
@@ -41,6 +42,14 @@ export class LogsComponent implements OnInit {
     ]
 
     return data
+  }
+
+  private getDistributionName(antDistribution: Map<AntType, number>): string {
+    var string: string = ''
+    antDistribution.forEach((percent: number, type: AntType) => {
+      string += percent + '%, '
+    })
+    return string
   }
 
 }
