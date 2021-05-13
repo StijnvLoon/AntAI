@@ -1,31 +1,28 @@
-@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css';
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css";
 input {
     width: 50px;
 }
 
 :root {
     font-weight: 300;
-    font-family: 'Lucida Sans';
+    font-family: "Lucida Sans";
 }
 
 .menustyle {
-    margin-top: -70px;
     margin-left: 60px;
-    font-weight: 300;
-    font-family: 'Lucida Sans';
 }
 
 .menustyle input {
-    padding:2px;
-    margin:2px 0;
-    border:0;
-    box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
-    font-family:inherit;
+    padding: 2px;
+    margin: 2px 0;
+    border: 0;
+    border-bottom: 1px solid black;
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+    font-family: inherit;
     font-size: inherit;
     background-color: #f1f1f1;
     color: black;
     font-size: 16px;
-    
 }
 
 .menustyle div {
@@ -38,31 +35,51 @@ input {
 }
 
 .menustyle button {
-    // background-color: rgb(253, 121, 165);
-    // border: 4px;
-    // color: white;
-    display:inline-block;
-    padding:0.35em 1.2em;
-    border:0.1em solid #FFFFFF;
-    margin:0 0.3em 0.3em 0;
-    border-radius:0.12em;
+    display: inline-block;
+    padding: 0.35em 1.2em;
+    border: 0.1em solid #ffffff;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.12em;
     box-sizing: border-box;
-    text-decoration:none;
-    font-family:'Roboto',sans-serif;
-    font-weight:300;
-    color:#7a6b6b;
-    text-align:center;
+    text-decoration: none;
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    color: #7a6b6b;
+    text-align: center;
     transition: all 0.2s;
+    cursor: pointer;
 }
 
-.menustyle button:hover{
-    color:#000000;
-    background-color:rgb(253, 121, 165);
-    }
+.menustyle button:hover {
+    color: #000000;
+    background-color: #FF4081;
+}
 
-    @media all and (max-width:30em){
-    .menustyle button{
-    display:block;
-    margin:0.4em auto;
+@media all and (max-width: 30em) {
+    .menustyle button {
+        display: block;
+        margin: 0.4em auto;
     }
+}
+
+.playing {
+    background-color: #e29f9d;
+}
+.playing:hover {
+    background-color: #e06561 !important;
+}
+.notplaying {
+    background-color: #abeaab;
+}
+.notplaying:hover {
+    background-color: #5bc55b !important;
+}
+
+.sidenav {
+    position: fixed !important; 
+    box-shadow: 5px 5px 7px 0px rgba(0,0,0,0.48) !important;
+    border-radius: 0px 8px 0px 0px !important;
+    background: linear-gradient(0deg, #ffaec9 0, #fd5d93 100%) !important;
+    width: 400px !important;
+    height: 100vh !important;
 }

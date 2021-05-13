@@ -1,21 +1,21 @@
 <mat-sidenav-container>
-    <mat-sidenav #sideNav mode="side">
-        <app-side-nav [logs]="logs"></app-side-nav>
-
+    <mat-sidenav #sideNav mode="side" class="sidenav">
+        <app-side-nav></app-side-nav>
     </mat-sidenav>
     <mat-sidenav-content>
         <app-toolbar [inputSideNav]="sideNav"></app-toolbar>
-        <br><br>
+        <!-- <br><br> -->
         <div class="menustyle">
-            <div class="menustyle" style="display: grid; grid-template-columns: repeat(6, 1fr);">
-                <div>width: <input [(ngModel)]="width"></div>
-                <div>height: <input [(ngModel)]="height"></div>
-                <div>enemyPercentage: <input [(ngModel)]="enemyPercent"></div>
-                <div>foodPercentage: <input [(ngModel)]="foodPercent"></div>
-                <div>blockadePercentage: <input [(ngModel)]="blockadePercent"></div>
+            <div style="display: grid; grid-template-columns: repeat(6, 1fr);">
+                <div>width: <input type="number" [(ngModel)]="width"></div>
+                <div>height: <input type="number" [(ngModel)]="height"></div>
+                <div>enemyPercentage: <input type="number" [(ngModel)]="enemyPercent"></div>
+                <div>foodPercentage: <input type="number" [(ngModel)]="foodPercent"></div>
+                <div>blockadePercentage: <input type="number" [(ngModel)]="blockadePercent"></div>
                 <div><button (click)="createNewGrid()">Generate Grid</button></div>
 
-                <div>ants: <input [(ngModel)]="ants"></div>
+                <div>ants: <input type="number" [(ngModel)]="ants"></div>
+                <div>delay: <input type="number" [(ngModel)]="delay"></div>
                 <!-- <div>gatherers (%): <input class="percentage" [(ngModel)]="gathererPercentage"></div>
                 <div>soldiers (%): <input class="percentage" [(ngModel)]="soldierPercentage"></div>
                 <div>caretakers (%): <input class="percentage" [(ngModel)]="caretakerPercentage"></div>
@@ -28,8 +28,9 @@
                 <button (click)="colony.createGathererAnt()">Add gatherer</button>
                 <button (click)="colony.createSoldierAnt()">Add soldier</button>
                 <button (click)="colony.createCaretakerAnt()">Add caretaker</button>
-                delay: <input [(ngModel)]="delay">
-                <button (click)="togglePlaying()">{{isPlaying ? 'Pause' : 'Play'}}</button>
+                <button (click)="togglePlaying()"
+                    [class.playing]="isPlaying"
+                    [class.notplaying]="!isPlaying">{{isPlaying ? 'Pause' : 'Play'}}</button>
                 <div style="display: flex; flex-direction: row;" *ngIf="colony">
                     <div>timer: {{timer}}s</div>
                     <div style="margin-left: 10px;">ants: {{colony.ants.length}}</div>
@@ -37,10 +38,9 @@
                 </div>
             </div>
         </div>
+        
         <app-grid [grid]="grid" *ngIf="grid"></app-grid>
         <app-logs [logs]="logs" *ngIf="logs"></app-logs>
-
-
 
     </mat-sidenav-content>
 </mat-sidenav-container>
