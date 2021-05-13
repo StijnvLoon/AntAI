@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GridComponent } from './components/grid/grid.component';
@@ -17,7 +17,7 @@ import { CellDialog } from './dialogs/cellDialog/Cell.dialog';
 import { EntityComponent } from './components/cell/entity/entity.component';
 import { AntComponent } from './components/cell/entity/ant/ant.component';
 import { LogsComponent } from './components/logs/logs.component';
-import { NgxChartsModule }from '@swimlane/ngx-charts';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ToolbarComponent } from './toolbar/toolbar.component';
