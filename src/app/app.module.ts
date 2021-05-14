@@ -19,6 +19,11 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { PageIntroComponent } from './side-nav/pages/page-intro/page-intro.component';
+import { PageEntitiesComponent } from './side-nav/pages/page-entities/page-entities.component';
+import { PageAntsComponent } from './side-nav/pages/page-ants/page-ants.component';
+import { PageAlgorithmsComponent } from './side-nav/pages/page-algorithms/page-algorithms.component';
+import { PageCellsComponent } from './side-nav/pages/page-cells/page-cells.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +33,12 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     CellDialog,
     LogsComponent,
     SideNavComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    PageIntroComponent,
+    PageEntitiesComponent,
+    PageAntsComponent,
+    PageAlgorithmsComponent,
+    PageCellsComponent
   ],
   imports: [
     BrowserModule,
