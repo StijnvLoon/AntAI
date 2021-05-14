@@ -6,6 +6,38 @@
     justify-content: center;
     align-items: center;
 }
-.food {
-    color: white;
+
+.entity {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.entity_ant {
+    background-color: rgb(65, 65, 65);
+}
+
+.entity_enemy {
+    background-color: rgb(226, 85, 85);
+}
+
+.entity_colony {
+    background-color: rgb(255, 208, 0);
+}
+
+.ant {
+    width: 30%;
+    height: 30%;
+    border-radius: 50%;
+}
+.ant_gatherer {
+    background-color: rgb(14, 167, 14);
+}
+.ant_soldier {
+    background-color: rgb(218, 22, 22);
+}
+.ant_caretaker {
+    background-color: rgb(16, 123, 245);
 }

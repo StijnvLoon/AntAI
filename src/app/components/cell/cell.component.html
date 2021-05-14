@@ -1,3 +1,14 @@
 <div class="cell" [ngStyle]="getCellStyle()" (click)="editCellDialog()">
-    <app-entity *ngIf="cell.entity" [entity]="cell.entity" style="width: 100%; height: 100%;"></app-entity>
+    <div class="entity" *ngIf="cell.entity" 
+        [class.entity_ant]="cell.entity.entityType == 0"
+        [class.entity_colony]="cell.entity.entityType == 1" 
+        [class.entity_enemy]="cell.entity.entityType == 2">
+
+        <div class="ant" *ngIf="cell.entity.entityType == 0"
+            [class.ant_gatherer]="cell.entity.antType == 0"
+            [class.ant_soldier]="cell.entity.antType == 1"
+            [class.ant_caretaker]="cell.entity.antType == 2">
+
+        </div>
+    </div>
 </div>

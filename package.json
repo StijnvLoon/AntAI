@@ -1,13 +1,16 @@
 {
   "name": "ant-ai",
   "version": "0.0.0",
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
     "start": "node --max-old-space-size=8048 ./node_modules/@angular/cli/bin/ng serve --aot --prod",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "electron": "ng build --base-href ./ && electron .",
+    "electron-export": "electron-packager ./ CouponManager --platform=win32 --arch=x64 --prune --overwrite --icon=./favicon_bee_rounded_square_512.ico"
   },
   "private": true,
   "dependencies": {
@@ -22,10 +25,12 @@
     "@angular/platform-browser-dynamic": "~10.0.11",
     "@angular/router": "~10.0.11",
     "@swimlane/ngx-charts": "^17.0.1",
+    "electron": "^12.0.7",
     "ngx-pagination": "^5.1.0",
     "rxjs": "~6.5.5",
     "save": "^2.4.0",
     "tslib": "^2.0.0",
+    "v8-compile-cache": "^2.3.0",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {

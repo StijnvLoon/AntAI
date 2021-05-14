@@ -11,7 +11,7 @@ export class CaretakerAnt extends Ant {
     constructor(
         public currentCell: Cell,
         public noTargetCell: Cell,
-        public getNextTarget: () => Cell,
+        public getNextTarget: (onResult: (cell: Cell) => void) => void,
     ) {
         super(AntType.CARETAKER, currentCell, noTargetCell, getNextTarget);
     }

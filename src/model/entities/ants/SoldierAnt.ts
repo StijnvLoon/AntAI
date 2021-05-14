@@ -4,13 +4,12 @@ import { Ant, AntType } from '../Ant';
 
 export class SoldierAnt extends Ant {
 
-
-    public killChange: number = GlobalVars.SOLDIER_KILLCHANGE
+    public readonly killChange: number = GlobalVars.SOLDIER_KILLCHANGE
 
     constructor(
         public currentCell: Cell,
         public noTargetCell: Cell,
-        public getNextTarget: () => Cell,
+        public getNextTarget: (onResult: (cell: Cell) => void) => void,
     ) {
         super(AntType.SOLDIER, currentCell, noTargetCell, getNextTarget);
     }

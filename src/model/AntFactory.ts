@@ -3,6 +3,7 @@ import { AntType } from './entities/Ant';
 import { GathererAnt } from './entities/ants/GathererAnt';
 import { SoldierAnt } from './entities/ants/SoldierAnt';
 import { CaretakerAnt } from './entities/ants/CaretakerAnt';
+import { async } from 'rxjs/internal/scheduler/async';
 
 export class AntFactory {
 
@@ -11,21 +12,21 @@ export class AntFactory {
         startCell: Cell,
         noTargetCell: Cell,
         colonyCell: Cell,
-        getNearestFoodCell: () => Cell,
+        getNearestFoodCell: () => Promise<Cell>,
         onKilled: () => void
     ): GathererAnt {
         const gatherer: GathererAnt = new GathererAnt(
             startCell,
             noTargetCell,
-            () => {
+            async (onResult) => {
                 if (gatherer.foodAmount == gatherer.maxFoodAmount) {
-                    return colonyCell
+                    onResult(colonyCell)
                 } else {
-                    const nearestFoodCell: Cell = getNearestFoodCell()
+                    const nearestFoodCell: Cell = await getNearestFoodCell()
                     if(nearestFoodCell) {
-                        return nearestFoodCell
+                        onResult(nearestFoodCell)
                     } else {
-                        return colonyCell
+                        onResult(colonyCell)
                     }
                 }
             },
@@ -43,18 +44,18 @@ export class AntFactory {
         startCell: Cell,
         noTargetCell: Cell,
         colonyCell: Cell,
-        getNearestEnemyCell: () => Cell,
+        getNearestEnemyCell: () => Promise<Cell>,
         onKilled: () => void
     ): SoldierAnt {
         const soldier: SoldierAnt = new SoldierAnt(
             startCell,
             noTargetCell,
-            () => {
-                const nearestEnemyCell: Cell = getNearestEnemyCell()
+            async (onResult) => {
+                const nearestEnemyCell: Cell = await getNearestEnemyCell()
                 if(nearestEnemyCell) {
-                    return nearestEnemyCell
+                    onResult(nearestEnemyCell)
                 } else {
-                    return colonyCell
+                    onResult(colonyCell)
                 }
             },
         )
@@ -70,21 +71,22 @@ export class AntFactory {
         startCell: Cell,
         noTargetCell: Cell,
         colonyCell: Cell,
-        getRandomEmptyCell: () => Cell,
+        getRandomEmptyCell: () => Promise<Cell>,
         onKilled: () => void
     ): CaretakerAnt {
         const careTaker: CaretakerAnt = new CaretakerAnt(
             startCell,
             noTargetCell,
-            () => {
+            async (onResult) => {
 
                 //if there had 'createAntInterval' time passed since last ant creation
                 //if so, update lastAntCreatedAt
                 if(careTaker.age > (careTaker.lastAntCreatedAt + careTaker.createAntInterval)) {
                     careTaker.lastAntCreatedAt = careTaker.lastAntCreatedAt + careTaker.createAntInterval
-                    return colonyCell
+                    onResult(colonyCell)
                 } else {
-                    return getRandomEmptyCell()
+                    const cell = await getRandomEmptyCell()
+                    onResult(cell)
                 }
             },
         )

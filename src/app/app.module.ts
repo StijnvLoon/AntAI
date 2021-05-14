@@ -14,8 +14,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CellDialog } from './dialogs/cellDialog/Cell.dialog';
-import { EntityComponent } from './components/cell/entity/entity.component';
-import { AntComponent } from './components/cell/entity/ant/ant.component';
 import { LogsComponent } from './components/logs/logs.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SideNavComponent } from './side-nav/side-nav.component';
@@ -28,8 +26,6 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     GridComponent,
     CellComponent,
     CellDialog,
-    EntityComponent,
-    AntComponent,
     LogsComponent,
     SideNavComponent,
     ToolbarComponent

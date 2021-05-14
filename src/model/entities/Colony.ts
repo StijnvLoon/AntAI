@@ -49,7 +49,7 @@ export class Colony extends Entity {
             this.grid.getRandomEmptyCell(),
             this.currentCell,
             this.currentCell,
-            () => {
+            async () => {
                 return this.grid.getNearestCellByType(newAnt.currentCell, CellType.FOOD)
             },
             () => { this.removeAnt(newAnt) }
@@ -63,7 +63,7 @@ export class Colony extends Entity {
             this.grid.getRandomEmptyCell(),
             this.currentCell,
             this.currentCell,
-            () => {
+            async () => {
                 return this.grid.getNearestCellByEntity(newAnt.currentCell, EntityType.ENEMY)
             },
             () => { this.removeAnt(newAnt) }
@@ -77,7 +77,7 @@ export class Colony extends Entity {
             this.grid.getRandomEmptyCell(),
             this.currentCell,
             this.currentCell,
-            () => {
+            async () => {
                 return this.grid.getRandomEmptyCell()
             },
             () => { this.removeAnt(newAnt) }
@@ -120,10 +120,14 @@ export class Colony extends Entity {
         //update ants
         this.ants.forEach((ant) => {
             if (ant.onTarget()) {
-                ant.setNewRoute(this.routeCalculator.calculateAstar(ant.currentCell, ant.getNextTarget()))
+                ant.getNextTarget((cell) => {
+                    ant.setNewRoute(this.routeCalculator.calculateAstar(ant.currentCell, cell))
+                })
             }
-            ant.progressRoute()
-            ant.increaseAge()
+            if(!ant.onTarget()) {
+                ant.progressRoute()
+                ant.increaseAge()
+            }
         })
 
         //notify cells

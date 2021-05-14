@@ -9,7 +9,7 @@ export class GathererAnt extends Ant {
     constructor(
         public currentCell: Cell,
         public noTargetCell: Cell,
-        public getNextTarget: () => Cell,
+        public getNextTarget: (onResult: (cell: Cell) => void) => void,
         public foodAmount: number = 0,
     ) {
         super(AntType.GATHERER, currentCell, noTargetCell, getNextTarget);

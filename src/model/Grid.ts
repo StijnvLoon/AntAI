@@ -120,7 +120,7 @@ export class Grid {
         }
     }
 
-    public getNearestCellByType(cell: Cell, cellType: CellType): Cell {
+    public async getNearestCellByType(cell: Cell, cellType: CellType): Promise<Cell> {
         var cells: Cell[]
 
         if(cellType == CellType.FOOD) {
@@ -135,7 +135,7 @@ export class Grid {
         return this.sortCellsByDistanceToCell(cell, cells)[0]
     }
 
-    public getNearestCellByEntity(cell: Cell, entityType: EntityType) {
+    public async getNearestCellByEntity(cell: Cell, entityType: EntityType): Promise<Cell> {
         const cells = Array.from(this.cellsMap.values()).filter((cell) => 
             cell.entity && cell.entity.entityType == entityType
         )
