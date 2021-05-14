@@ -35,13 +35,7 @@ export class Grid {
         //set enemy
         if (CustomMath.randomRange(0, 100) < this.enemyPercent) {
             const cell = new EmptyCell(y, x)
-            const enemy = new Enemy(cell)
-            enemy.listener = {
-                onKilled: () => {
-                    delete enemy.currentCell.entity
-                }
-            }
-            cell.entity = enemy
+            this.createEnemy(cell)
             return cell
         }
         //set blockade
@@ -50,6 +44,16 @@ export class Grid {
         }
 
         return new EmptyCell(y, x)
+    }
+
+    private createEnemy(cell: Cell) {
+        const enemy = new Enemy(cell)
+        enemy.listener = {
+            onKilled: () => {
+                this.createEnemy(this.getRandomEmptyCell())
+                delete enemy.currentCell.entity
+            }
+        }
     }
 
     public createCellByType(y: number, x: number, type: CellType): Cell {
@@ -141,7 +145,7 @@ export class Grid {
 
     public clearEntities() {
         Array.from(this.cellsMap.values()).forEach((cell) => {
-            if(cell.entity && cell.entity.entityType !== EntityType.ENEMY) {
+            if(cell.entity) {
                 cell.entity.kill()
             }
         })

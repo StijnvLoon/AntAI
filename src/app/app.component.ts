@@ -80,7 +80,6 @@ export class AppComponent implements OnInit {
     this.timer = 0
     this.grid.clearEntities()
     const antDistribution = this.distributionAI.getPredictedDistribution((bestDistribution) => {
-      console.log('best result:')
       console.log(bestDistribution)
       alert('gevonden!')
     })

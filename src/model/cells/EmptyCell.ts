@@ -1,7 +1,9 @@
+import { CustomMath } from "src/utils/CustomMath";
 import { GlobalVars } from "src/utils/GlobalVars";
 import { Cell, CellType } from "../Cell";
 import { Ant, AntType } from "../entities/Ant";
 import { GathererAnt } from "../entities/ants/GathererAnt";
+import { SoldierAnt } from "../entities/ants/SoldierAnt";
 import { Colony } from "../entities/Colony";
 import { Entity, EntityType } from "../Entity";
 
@@ -72,11 +74,21 @@ export class EmptyCell extends Cell {
                 }
                 case EntityType.ENEMY: {
 
-                    if(ant.antType == AntType.GATHERER) {
-                        ant.kill()
-                    }
-                    if(ant.antType == AntType.SOLDIER) {
-                        this.entity.kill()
+                    switch(ant.antType) {
+                        case AntType.SOLDIER: {
+                            const soldier = ant as SoldierAnt
+                            
+                            if(CustomMath.randomRange(0, 100) < soldier.killChange) {
+                                this.entity.kill()
+                            } else {
+                                soldier.kill()
+                            }
+
+                            break
+                        }
+                        default: {
+                            ant.kill()
+                        }
                     }
 
                     break

@@ -1,7 +1,11 @@
+import { GlobalVars } from 'src/utils/GlobalVars';
 import { Cell } from '../../Cell';
 import { Ant, AntType } from '../Ant';
 
 export class SoldierAnt extends Ant {
+
+
+    public killChange: number = GlobalVars.SOLDIER_KILLCHANGE
 
     constructor(
         public currentCell: Cell,
