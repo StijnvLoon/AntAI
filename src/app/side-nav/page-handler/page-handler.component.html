@@ -1,0 +1,13 @@
+<div class="container">
+    <button mat-icon-button class="pointer_button" (click)="pageKeeper.previousPage()"
+        [disabled]="pageKeeper.currentPage == 1">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <span>{{pageKeeper.currentPage}}</span>
+    
+    <button mat-icon-button class="pointer_button" (click)="pageKeeper.nextPage()"
+        [disabled]="pageKeeper.currentPage == pageKeeper.pageAmount">
+        <mat-icon>arrow_forward</mat-icon>
+    </button>
+</div>

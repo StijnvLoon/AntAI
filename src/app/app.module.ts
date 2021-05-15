@@ -24,6 +24,7 @@ import { PageEntitiesComponent } from './side-nav/pages/page-entities/page-entit
 import { PageAntsComponent } from './side-nav/pages/page-ants/page-ants.component';
 import { PageAlgorithmsComponent } from './side-nav/pages/page-algorithms/page-algorithms.component';
 import { PageCellsComponent } from './side-nav/pages/page-cells/page-cells.component';
+import { PageHandlerComponent } from './side-nav/page-handler/page-handler.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PageCellsComponent } from './side-nav/pages/page-cells/page-cells.compo
     PageEntitiesComponent,
     PageAntsComponent,
     PageAlgorithmsComponent,
-    PageCellsComponent
+    PageCellsComponent,
+    PageHandlerComponent
   ],
   imports: [
     BrowserModule,

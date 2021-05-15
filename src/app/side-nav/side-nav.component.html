@@ -12,42 +12,13 @@
         </div>
     </div>
     <div class="body">
-        <!-- <ul class="nav docs">
-            <li class="dataset" *ngFor="let item of data | paginate : { id : 'info_pagination',
-            itemsPerPage: 1,
-            currentPage: page,
-            totalItems: totalRecords }">
-                <h2>{{item.title}}</h2>
-                <img src='../../assets/images/{{item.img}}' class="img" onerror="this.style.display='none'">
-                <p>{{item.p1}}</p>
-                <br>
-                <h2>{{item.title2}}</h2>
-                <p>{{item.p2}}</p>
-                <br>
-                <h2>{{item.title3}}</h2>
-                <p>{{item.p3}}</p>
-            </li>
-        </ul> -->
-        <app-page-intro *ngIf="page == 1"></app-page-intro>
-        <app-page-cells *ngIf="page == 2"></app-page-cells>
-        <app-page-entities *ngIf="page == 3"></app-page-entities>
-        <app-page-ants *ngIf="page == 4"></app-page-ants>
-        <app-page-algorithms *ngIf="page == 5"></app-page-algorithms>
-
+        <app-page-intro *ngIf="pageKeeper.currentPage == 1"></app-page-intro>
+        <app-page-cells *ngIf="pageKeeper.currentPage == 2"></app-page-cells>
+        <app-page-entities *ngIf="pageKeeper.currentPage == 3"></app-page-entities>
+        <app-page-ants *ngIf="pageKeeper.currentPage == 4"></app-page-ants>
+        <app-page-algorithms *ngIf="pageKeeper.currentPage == 5"></app-page-algorithms>
     </div>
     <div class="footer">
-
-        <button (click)="adjustPage(-1)" [disabled]="page == 1">Prev</button>
-        <button (click)="adjustPage(1)" [disabled]="page == 5">Next</button>
-
-        <!-- <style>
-            .paginate /deep/ .ngx-pagination {
-                margin-left: -30px;
-                color: white;
-            }
-        </style>
-
-        <pagination-controls class="paginate" responsive="true" autoHide="true" id="info_pagination" maxSize="7"
-            directionLinks="true" (pageChange)="page = $event"></pagination-controls> -->
+        <app-page-handler style="width: 100%;" [pageKeeper]="pageKeeper"></app-page-handler>
     </div>
 </div>
