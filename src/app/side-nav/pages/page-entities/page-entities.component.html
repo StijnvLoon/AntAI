@@ -1,1 +1,22 @@
-<p>page-entities works!</p>
+<div class="docs">
+
+    <h2>Entity types</h2>
+    <p>There are several types of entities in the ant sim. Currently there are 3 types of entities: the colony, enemy and ant. The ant entity is subdivided into three different ant types, soldiers, gatherers and caretakers.</p>
+    <app-cell class="grid row" [cell]="cell1" style="width: 100px; height: 100px;"></app-cell>
+    <h3>Colony</h3>
+    <p>The colony, which acts as a management object for the colony. 
+        The colony produces new ants according to a distribution ratio that is provided by the main component. 
+        It also stores the number of ants that exist at any point during the simulation.</p>
+    <app-cell class="grid row" [cell]="cell2" style="width: 100px; height: 100px;"></app-cell>
+    <h3>Enemy</h3>
+    <p>An enemy is an immovable entity that kills ants that touch it. The colony AI can counter this by producing soldier/warrior ants, which will be further explained in the next section</p>
+    <app-cell class="grid row" [cell]="cell3" style="width: 100px; height: 100px;"></app-cell>
+    <h3>Ants</h3>
+    <p>Ants are the backbone of the simulator. They have a number of functionalities that depend on the ant's type. Such as fighting, gathering or producing new ants. In the next section we will explain the different ants and their behavior in more detail.</p>
+
+    <br>
+    <p class="upnext">Up next: Ant types and behavior.</p>
+</div>
+
+
+

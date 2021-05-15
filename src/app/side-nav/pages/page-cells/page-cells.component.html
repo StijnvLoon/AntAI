@@ -1,7 +1,7 @@
 <div class="docs">
 
     <h2>Cell types</h2>
-    <p>TODO: introduction</p>
+    <p>Our game area is a grid which consists of cells. Each cell acts as a container for the different entities that move across the map. Cells are static objects that define how the map/terrain behaves. </p>
 
     <div class="center">
         <div class="grid">
@@ -13,8 +13,17 @@
     </div>
 
     <h3>Empty cells <span style="color: white">▮</span></h3>
+    <p>Empty cells are the basic type of cell used for constructing the grid. Seeing a white square indicates a cell that does not contain any entities or unique properties, but rather, basic information that each cell contains.</p>
+    <p>Each cell contains a number of properties. The first properties, x and y are for navigation. A cell has an x and y position to represent it's location.</p>
+    <p>An empty cell is traversable by ants and contain a cost of {{globalvars.CELL_COSTS}}, but this cost is temporarily lowered if an ant recently traversed it. This rewards following a trait ants have in nature; they walk in a straight line and follow each other.</p>
 
     <h3>Food cells <span style="color: #00CC36">▮</span></h3>
+    <p>A food cell is traversable like an empty cell. However, it also allows gatherer ants to take {{globalvars.GATHERER_MAXFOODAMOUNT}} food out of it's food storage, which is a property contained in the food cell. Food cells gradually produce food over multiple turns.</p>
+    <p>Food cells change colour based on the amount of food that is present in the cell. A dark shade of green indicates a large yield is present, whereas a light shader indicates the food is running out.</p>
 
     <h3>Blockade cells <span style="color: #c78a42">▮</span></h3>
+    <p>Blockade cells are different from food cells and empty cells. Blockade cells cannot be traversed, and thus the cost for traversing it is irrelevant. The pathfinding algorithm (A* search) calculates a route around these blockades/obstacles.</p>
+    <br>
+    <p class="upnext">Up next: Entities and their purpose.</p>
 </div>
+
