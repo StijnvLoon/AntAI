@@ -48,6 +48,18 @@
     text-align: justify;
     margin-right: 10px;
     padding-left: 10px;
+    animation: fade 0.5s ease;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }
 
 .docs h2 {
