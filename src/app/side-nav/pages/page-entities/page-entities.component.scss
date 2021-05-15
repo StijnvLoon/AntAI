@@ -1,0 +1,23 @@
+h3 span {
+    font-size: 20px;
+}
+
+.grid {
+    background-color: transparent;
+    border: 1px solid black;
+    width: 150px;
+    height: 150px;
+    display: grid;
+    grid-gap: 1px;
+    grid-template-columns: auto auto auto auto;
+    pointer-events: none;
+    text-align: left;
+    margin-bottom: 4px;
+    margin-top: 12px;
+}
+
+.row {
+    border: 2px solid black;
+    grid-template-columns: auto !important;
+    pointer-events: none;
+}
