@@ -12,6 +12,7 @@ export class Colony extends Entity {
     public foodAmount: number = GlobalVars.COLONY_START_FOODAMOUNT
     private routeCalculator: RouteCalculator
     private antFactory: AntFactory = new AntFactory()
+    public inAccessibleCells: Cell[] = []
 
     constructor(
         public grid: Grid,
@@ -19,14 +20,15 @@ export class Colony extends Entity {
         antAmount: number
     ) {
         super(grid.getRandomEmptyCell(), EntityType.COLONY)
+        this.grid.inAccessibleCells = this.inAccessibleCells
         this.routeCalculator = new RouteCalculator(grid.cellsMap)
         this.ants = []
 
         antDistributionMap.forEach((percent: number, type: AntType) => {
             const amount: number = Math.round((percent / 100) * antAmount)
 
-            for(let i = 0; i < amount; i++) {
-                switch(type) {
+            for (let i = 0; i < amount; i++) {
+                switch (type) {
                     case AntType.GATHERER: {
                         this.createGathererAnt()
                         break
@@ -92,10 +94,10 @@ export class Colony extends Entity {
 
         this.antDistributionMap.forEach((percent: number, type: AntType) => {
             const antAmount = this.ants.filter((ant) => ant.antType == type).length
-            const neededAntsAmount = Math.round((percent/100) * this.ants.length)
+            const neededAntsAmount = Math.round((percent / 100) * this.ants.length)
             const shortage = neededAntsAmount - antAmount
 
-            if(shortage > shortageAmount) {
+            if (shortage > shortageAmount) {
                 shortageAmount = shortage
                 neededType = type
             }
@@ -103,7 +105,7 @@ export class Colony extends Entity {
 
         return neededType
     }
-    
+
     private removeAnt(ant: Ant) {
         const index: number = this.ants.indexOf(ant)
 
@@ -113,7 +115,7 @@ export class Colony extends Entity {
 
     turn() {
         //check if there are any ants
-        if(this.ants.length == 0) {
+        if (this.ants.length == 0) {
             this.kill()
         }
 
@@ -121,10 +123,17 @@ export class Colony extends Entity {
         this.ants.forEach((ant) => {
             if (ant.onTarget()) {
                 ant.getNextTarget((cell) => {
-                    ant.setNewRoute(this.routeCalculator.calculateAstar(ant.currentCell, cell))
+                    const route: Cell[] = this.routeCalculator.calculateAstar(ant.currentCell, cell)
+
+                    //if route is undefined, no route is possible to targetcell, add it to inaccassiblecells
+                    if (route == undefined) {
+                        this.inAccessibleCells.push(cell)
+                    } else {
+                        ant.setNewRoute(route)
+                    }
                 })
             }
-            if(!ant.onTarget()) {
+            if (!ant.onTarget()) {
                 ant.progressRoute()
             }
             ant.increaseAge()

@@ -28,12 +28,12 @@ export class RouteCalculator {
                 }
             }
 
-            if(currentItem == undefined) {
-                console.warn("UNDEFINED CURRENTITEM!!!");
-                console.log(startCell)
-                console.log(targetCell)
-                console.log(openItems)
-                console.log(closedCells)
+            if(
+                currentItem == undefined ||
+                closedCells.length == Array.from(this.availableCells.entries()).length
+                ) {
+                //no route possible
+                return undefined
             }
 
             //move currentcell to closedCells
