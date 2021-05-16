@@ -1,1 +1,20 @@
-<p>page-ants works!</p>
+<div class="docs">
+
+    <h2>Ant types</h2>
+    <p>The ant is subdivided into three different ant types, soldiers, gatherers and caretakers. In real life ant would have a variable role, but for the purpose of this simulation an ant's role is permanent. It is allocated a role at birth by the colony ai, which is either </p>
+    <app-cell class="grid row" [cell]="cell1" style="width: 100px; height: 100px;"></app-cell>
+    <h3>Gatherer</h3>
+    <p>Tha gatherer ant is responsible for bringing food to the colony. In order for new ants to spawn, there needs to be an actively maintained storage of food in the colony.</p>
+    <app-cell class="grid row" [cell]="cell2" style="width: 100px; height: 100px;"></app-cell>
+    <h3>Soldier</h3>
+    <p>Soldier ants search and kill enemies. Enemies are represented by red circles on the map and do not move. After destroying all enemies in the map, the soldier ants return to the colony.</p>
+    <app-cell class="grid row" [cell]="cell3" style="width: 100px; height: 100px;"></app-cell>
+    <h3>Caretaker</h3>
+    <p>Caretaker ants are required to maintain the colony and extend it's lifetime. Caretaker ants gradually produce more ants, but consume food in the process. Without caretaker ants, a colony quickly dies out.</p>
+
+    <br>
+    <p class="upnext">Up next: Algorithms.</p>
+</div>
+
+
+
