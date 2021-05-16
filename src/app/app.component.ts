@@ -5,6 +5,7 @@ import { ColonyService } from 'src/app/services/colony.service';
 import { GlobalVars } from 'src/utils/GlobalVars';
 import { Logs } from 'src/model/log/logs';
 import { AntDistributionChooserAI } from 'src/model/AntDistributionChooserAI'
+import { AntType } from 'src/model/entities/Ant';
 
 @Component({
   selector: 'app-root',

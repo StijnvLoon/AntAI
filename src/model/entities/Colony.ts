@@ -2,7 +2,7 @@ import { Ant, AntType } from "./Ant";
 import { Grid } from "../Grid";
 import { Entity, EntityType } from "../Entity";
 import { RouteCalculator } from "../RouteCalculator";
-import { CellType } from "../Cell";
+import { Cell, CellType } from "../Cell";
 import { AntFactory } from "../AntFactory";
 import { GlobalVars } from "src/utils/GlobalVars";
 
@@ -44,9 +44,9 @@ export class Colony extends Entity {
         });
     }
 
-    createGathererAnt() {
+    createGathererAnt(cell?: Cell) {
         const newAnt = this.antFactory.createGathererAnt(
-            this.grid.getRandomEmptyCell(),
+            cell ? cell : this.grid.getRandomEmptyNeighbourCell(this.currentCell),
             this.currentCell,
             this.currentCell,
             async () => {
@@ -58,9 +58,9 @@ export class Colony extends Entity {
         this.ants.push(newAnt)
     }
 
-    createSoldierAnt() {
+    createSoldierAnt(cell?: Cell) {
         const newAnt = this.antFactory.createSoldierAnt(
-            this.grid.getRandomEmptyCell(),
+            cell ? cell : this.grid.getRandomEmptyNeighbourCell(this.currentCell),
             this.currentCell,
             this.currentCell,
             async () => {
@@ -72,9 +72,9 @@ export class Colony extends Entity {
         this.ants.push(newAnt)
     }
 
-    createCaretakerAnt() {
+    createCaretakerAnt(cell?: Cell) {
         const newAnt = this.antFactory.createCaretakerAnt(
-            this.grid.getRandomEmptyCell(),
+            cell ? cell : this.grid.getRandomEmptyNeighbourCell(this.currentCell),
             this.currentCell,
             this.currentCell,
             async () => {
@@ -126,8 +126,8 @@ export class Colony extends Entity {
             }
             if(!ant.onTarget()) {
                 ant.progressRoute()
-                ant.increaseAge()
             }
+            ant.increaseAge()
         })
 
         //notify cells

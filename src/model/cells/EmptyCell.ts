@@ -80,6 +80,7 @@ export class EmptyCell extends Cell {
                             
                             if(CustomMath.randomRange(0, 100) < soldier.killChange) {
                                 this.entity.kill()
+                                this.replaceEntity(soldier)
                             } else {
                                 soldier.kill()
                             }

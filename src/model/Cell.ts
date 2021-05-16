@@ -16,7 +16,10 @@ export class Cell {
     }
     
     replaceEntity(entity: Entity) {
-        entity.currentCell.entity = undefined
+        if(entity.currentCell) {
+            entity.currentCell.entity = undefined
+        }
+
         entity.currentCell = this
         this.entity = entity
 

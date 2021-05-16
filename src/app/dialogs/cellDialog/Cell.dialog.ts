@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ColonyService } from 'src/app/services/colony.service';
 import { CellType } from 'src/model/Cell';
+import { AntType } from 'src/model/entities/Ant';
 
 export interface DialogData {
     y: number
@@ -37,5 +38,22 @@ export class CellDialog {
 
     close() {
         this.dialogRef.close()
+    }
+
+    placeAnt(type: AntType) {
+        switch(type) {
+            case AntType.GATHERER: {
+                this.colonyService.colony.createGathererAnt(this.colonyService.colony.grid.getCellAt(this.data.y, this.data.x))
+                break
+            }
+            case AntType.SOLDIER: {
+                this.colonyService.colony.createSoldierAnt(this.colonyService.colony.grid.getCellAt(this.data.y, this.data.x))
+                break
+            }
+            case AntType.GATHERER: {
+                this.colonyService.colony.createCaretakerAnt(this.colonyService.colony.grid.getCellAt(this.data.y, this.data.x))
+                break
+            }
+        }
     }
 }

@@ -26,11 +26,31 @@ export class LogsComponent implements OnInit {
 
   getChartData() {
     const lifetimeData: Object[] = []
+    const gathererData: Object[] = []
+    const soldierData: Object[] = []
+    const careTakerData: Object[] = []
 
     this.logs.results.forEach((result) => {
+      const name = this.getDistributionName(result.antDistribution)
+
       lifetimeData.push({
-        "name": this.getDistributionName(result.antDistribution),
+        "name": name,
         "value": result.colonyLifeTime
+      })
+
+      gathererData.push({
+        "name": name,
+        "value": result.antDistribution.get(AntType.GATHERER)
+      })
+
+      soldierData.push({
+        "name": name,
+        "value": result.antDistribution.get(AntType.SOLDIER)
+      })
+
+      careTakerData.push({
+        "name": name,
+        "value": result.antDistribution.get(AntType.CARETAKER)
       })
     })
 
@@ -38,6 +58,18 @@ export class LogsComponent implements OnInit {
       {
         "name": "Lifetime",
         "series": lifetimeData
+      },
+      {
+        "name": "Gatherer distribution",
+        "series": gathererData
+      },
+      {
+        "name": "Soldier distribution",
+        "series": soldierData
+      },
+      {
+        "name": "Caretaker distribution",
+        "series": careTakerData
       }
     ]
 

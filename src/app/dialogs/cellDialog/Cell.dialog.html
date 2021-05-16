@@ -1,14 +1,21 @@
 <h1 mat-dialog-title>y: {{data.y}} - x: {{data.x}}</h1>
 
 <div mat-dialog-content>
-    <section>
+    <div>
         <h4>Celltype:</h4>
         <mat-radio-group [formControl]="cellTypeControl">
            <mat-radio-button value='0'>Empty</mat-radio-button>
            <mat-radio-button value='1'>Food</mat-radio-button>
            <mat-radio-button value='2'>Blockade</mat-radio-button>
         </mat-radio-group>
-    </section>
+    </div>
+
+    <div>
+        <h4>Place ant:</h4>
+        <button (click)="placeAnt(0)">Gatherer</button>
+        <button (click)="placeAnt(1)">Soldier</button>
+        <button (click)="placeAnt(2)">Caretaker</button>
+    </div>
 </div>
 
 <div mat-dialog-actions class="actions">

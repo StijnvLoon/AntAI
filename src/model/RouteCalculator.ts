@@ -28,6 +28,14 @@ export class RouteCalculator {
                 }
             }
 
+            if(currentItem == undefined) {
+                console.warn("UNDEFINED CURRENTITEM!!!");
+                console.log(startCell)
+                console.log(targetCell)
+                console.log(openItems)
+                console.log(closedCells)
+            }
+
             //move currentcell to closedCells
             openItems.splice(currentIndex, 1)
             closedCells.push(currentItem.cell)

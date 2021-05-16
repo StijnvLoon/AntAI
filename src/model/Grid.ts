@@ -57,7 +57,7 @@ export class Grid {
     }
 
     public createCellByType(y: number, x: number, type: CellType): Cell {
-        switch(type) {
+        switch (type) {
             case CellType.EMPTY: {
                 return new EmptyCell(y, x)
             }
@@ -96,16 +96,21 @@ export class Grid {
     }
 
     public getRandomNeighbourCell(currentCell: Cell): Cell {
-        //1: up, 2: right, 3: down, 4: left
-        const direction = CustomMath.randomRange(1, 4)
+        var direction
+        var goodDirectionFound = false
 
-        if (
-            (currentCell.y == 0 && direction == 1) ||
-            (currentCell.y == this.height - 1 && direction == 3) ||
-            (currentCell.x == 0 && direction == 4) ||
-            (currentCell.x == this.width - 1 && direction == 2)
-        ) {
-            return currentCell
+        while (!goodDirectionFound) {
+            //1: up, 2: right, 3: down, 4: left
+            direction = CustomMath.randomRange(1, 4)
+
+            if (!(
+                (currentCell.y == 0 && direction == 1) ||
+                (currentCell.y == this.height - 1 && direction == 3) ||
+                (currentCell.x == 0 && direction == 4) ||
+                (currentCell.x == this.width - 1 && direction == 2))
+            ) {
+                goodDirectionFound = true
+            }
         }
 
         switch (direction) {
@@ -120,10 +125,24 @@ export class Grid {
         }
     }
 
+    public getRandomEmptyNeighbourCell(currentCell: Cell): Cell {
+        var emptyCell: Cell
+
+        while (emptyCell == undefined) {
+            const pickedCell = this.getRandomNeighbourCell(currentCell)
+
+            if (pickedCell.type == CellType.EMPTY) {
+                emptyCell = pickedCell
+            }
+        }
+
+        return emptyCell
+    }
+
     public async getNearestCellByType(cell: Cell, cellType: CellType): Promise<Cell> {
         var cells: Cell[]
 
-        if(cellType == CellType.FOOD) {
+        if (cellType == CellType.FOOD) {
             cells = Array.from(this.cellsMap.values()).filter((cell) => {
                 const foodCell = cell as FoodCell
                 return cell.type == cellType && foodCell.foodAmount > 0
@@ -136,7 +155,7 @@ export class Grid {
     }
 
     public async getNearestCellByEntity(cell: Cell, entityType: EntityType): Promise<Cell> {
-        const cells = Array.from(this.cellsMap.values()).filter((cell) => 
+        const cells = Array.from(this.cellsMap.values()).filter((cell) =>
             cell.entity && cell.entity.entityType == entityType
         )
 
@@ -145,7 +164,7 @@ export class Grid {
 
     public clearEntities() {
         Array.from(this.cellsMap.values()).forEach((cell) => {
-            if(cell.entity) {
+            if (cell.entity) {
                 cell.entity.kill()
             }
         })
@@ -158,10 +177,10 @@ export class Grid {
             const byDiff = Math.abs(targetCell.y - b.y)     //6
             const bxDiff = Math.abs(targetCell.x - b.x)     //1
 
-            if((ayDiff + axDiff) > (byDiff + bxDiff)) {
+            if ((ayDiff + axDiff) > (byDiff + bxDiff)) {
                 return 1
             }
-            if((ayDiff + axDiff) < (byDiff + bxDiff)) {
+            if ((ayDiff + axDiff) < (byDiff + bxDiff)) {
                 return -1
             }
             return 0
