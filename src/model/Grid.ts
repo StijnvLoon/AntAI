@@ -10,13 +10,15 @@ import { VerboseMode } from "src/utils/VerboseMode";
 export class Grid {
 
     public cellsMap: Map<string, Cell>
+    //colony dependent, ref changes with new colony
+    public inAccessibleCells: Cell[] = []
 
     constructor(
         public readonly width: number,
         public readonly height: number,
         private readonly foodPercent: number,
         private readonly enemyPercent: number,
-        private readonly blockadePercent: number
+        private readonly blockadePercent: number,
     ) {
         this.cellsMap = new Map()
         for (var y = 0; y < height; y++) {
@@ -88,7 +90,9 @@ export class Grid {
             const pickedCell = this.getRandomCell()
 
             if (pickedCell.type == CellType.EMPTY && !pickedCell.entity) {
-                emptyCell = pickedCell
+                if(!this.inAccessibleCells.includes(pickedCell)) {
+                    emptyCell = pickedCell
+                }
             }
         }
 
@@ -145,10 +149,12 @@ export class Grid {
         if (cellType == CellType.FOOD) {
             cells = Array.from(this.cellsMap.values()).filter((cell) => {
                 const foodCell = cell as FoodCell
-                return cell.type == cellType && foodCell.foodAmount > 0
+                return cell.type == cellType && foodCell.foodAmount > 0 && !this.inAccessibleCells.includes(cell)
             })
         } else {
-            cells = Array.from(this.cellsMap.values()).filter((cell) => cell.type == cellType)
+            cells = Array.from(this.cellsMap.values()).filter(
+                (cell) => cell.type == cellType && !this.inAccessibleCells.includes(cell)
+                )
         }
 
         return this.sortCellsByDistanceToCell(cell, cells)[0]
@@ -156,7 +162,7 @@ export class Grid {
 
     public async getNearestCellByEntity(cell: Cell, entityType: EntityType): Promise<Cell> {
         const cells = Array.from(this.cellsMap.values()).filter((cell) =>
-            cell.entity && cell.entity.entityType == entityType
+            cell.entity && cell.entity.entityType == entityType && !this.inAccessibleCells.includes(cell)
         )
 
         return this.sortCellsByDistanceToCell(cell, cells)[0]
