@@ -1,1 +1,21 @@
-<p>page-algorithms works!</p>
+<div class="docs">
+    <h2>A* Search</h2>
+    <p>We have used the A* search algorithm for determining the shortest path from an ant to it's target. The ant can't simply walk in a straight line because it has to respect the grid and it's obstacles. Therefore, each cell contains a cost property.
+       In order to calculate the shortest path, the origin and target cells are stored, and a route is determined from the origin to the target using cost analysis. Each cell's cost is added to the traversal cost. In order to progress from 1 cell to the next, the neighbouring/adjacent cells are selected and compared to the current cell and the cheapest one is used to calculate the next cell.
+    </p>
+    <p>The formula for A* search is: f(x) = g(n) + h(n) where n is the next node on the path, g(n) is the cost of the path from the start node to n, and h(n) is a heuristic function that estimates the cost of the cheapest path from n to the goal. The heuristics function is used to guide the search, because the target position is known. (View the source article here: <a href="https://en.wikipedia.org/wiki/A*_search_algorithm#:~:text=*%2Dlike%20algorithm.-,Description,shortest%20time%2C%20etc.).">Source</a>)</p>
+    <p>It is worth noting that in many solutions where A* is used, real world euclidean distance does not apply because a grid is navigated in 90 degree angles. The form of geometry used in A* is called "Taxicab Geometry", it introduces a metric where distance between points is calculated using the sum of the absolute difference (a positive number) of two coordinates. The metric is called "Manhattan distance". You can read more about this in the referenced Wikipedia entry!</p>
+    <p>The euclidean distance is used for the heuristic function h(x), the manhattan distance is used to calculate the cost for A* traversal.</p>
+
+    <h2>Machine Learning</h2>
+    <p>In order to calculate the best subdivision of different ant types. We have come up with an algorithm that systematically alters the ratio of gatherers to soldiers to caretakers (you can try it out by clicking play and viewing the graph data).</p>
+    <p>The algorithm is divided into three phases. In the initial phase a number of generic distributions are tested and the lifetime is stored. An ant type is selected, and it's spawn ratio is decreased by 20 from it's starting point, 80 until it reaches 0. The remainder percentage (what is left after substracting the selected ant type's percentage from 100) is distributed evenly over the other ant types.
+    After the percentage reaches 0 the next ant type is selected and the process is executed again. At this point there is a general idea of what might be a useful distribution, but the percentages are not specific enough.
+    </p>
+    <p>This is where the second phase comes into play, the expertise phase. It selects the best distribution from the first phase (highest lifetime of the colony), and calculates different adjustmens in steps of 2.5%</p>
+    <p>In the third phase the distribution with the highest lifetime is selected, and the surch is concluded.</p>
+
+
+    <h2>Conclusion</h2>
+    <p>We hope this short summary informed you of the goals we had in mind for this application. We hope you understand a bit more about how it works and how we made it. However, if you have any questions about it, do not hesitate to get in touch :)</p>
+</div>

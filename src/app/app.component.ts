@@ -82,7 +82,7 @@ export class AppComponent implements OnInit {
     this.grid.clearEntities()
     const antDistribution = this.distributionAI.getPredictedDistribution((bestDistribution) => {
       console.log(bestDistribution)
-      alert('gevonden!')
+      alert('Found optimal distribution / Beste distributie gevonden!')
     })
 
     this.colony = new Colony(
