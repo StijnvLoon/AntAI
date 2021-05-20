@@ -1,6 +1,4 @@
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
-import { GlobalVars } from 'src/utils/GlobalVars';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-side-nav',
